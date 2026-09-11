@@ -1,0 +1,3815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>English with Alex</title>
+
+<style>
+
+/* =========================
+   GENERAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+button{
+    font-family:inherit;
+}
+
+.container{
+    width:92%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.hidden{
+    display:none!important;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    background:linear-gradient(135deg,#061b3a,#073b7c);
+    color:white;
+    padding:12px 4%;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 3px 15px rgba(0,0,0,.25);
+}
+
+.navbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:20px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.brand span{
+    color:#ffd21c;
+}
+
+
+/* American flag */
+
+.usa-flag{
+    width:45px;
+    height:30px;
+    border:2px solid white;
+    border-radius:4px;
+    position:relative;
+    overflow:hidden;
+
+    background:repeating-linear-gradient(
+        to bottom,
+        #b22234 0px,
+        #b22234 2.3px,
+        #ffffff 2.3px,
+        #ffffff 4.6px
+    );
+}
+
+.usa-flag:before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:20px;
+    height:16px;
+    background:#3c3b6e;
+}
+
+nav{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+}
+
+nav button{
+    background:transparent;
+    color:white;
+    border:none;
+    padding:8px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+nav button:hover{
+    background:rgba(255,255,255,.15);
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:470px;
+
+    background:
+    linear-gradient(
+        90deg,
+        rgba(3,20,48,.95),
+        rgba(3,45,95,.65)
+    ),
+    url("https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1600&q=85");
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    align-items:center;
+
+    color:white;
+    padding:55px 7%;
+}
+
+.hero-content{
+    max-width:650px;
+}
+
+.hero h1{
+    font-size:48px;
+    line-height:1.1;
+    margin-bottom:18px;
+}
+
+.hero h1 span{
+    color:#ffd21c;
+}
+
+.hero p{
+    font-size:19px;
+    margin-bottom:25px;
+}
+
+.tagline{
+    color:#ffd21c;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.btn{
+    border:none;
+    padding:13px 22px;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:5px;
+}
+
+.primary{
+    background:#ffd21c;
+    color:#111;
+}
+
+.secondary{
+    background:white;
+    color:#073b7c;
+}
+
+
+/* =========================
+   AUDIO CONTROL
+========================= */
+
+.audio-panel{
+    background:#061b3a;
+    color:white;
+    padding:18px;
+    margin-top:20px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.audio-panel button{
+    background:#ffd21c;
+    border:none;
+    padding:10px 15px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.audio-status{
+    font-size:14px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+section.content-section{
+    padding:55px 0;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.section-title h2{
+    color:#073b7c;
+    font-size:32px;
+}
+
+.section-title p{
+    color:#596579;
+}
+
+
+/* =========================
+   LEVELS
+========================= */
+
+.levels{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.level{
+    padding:30px;
+    border-radius:20px;
+    color:white;
+    text-align:center;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+.level:hover{
+    transform:translateY(-6px);
+}
+
+.level h3{
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.beginner{
+    background:linear-gradient(135deg,#168b45,#24b967);
+}
+
+.intermediate{
+    background:linear-gradient(135deg,#076fc5,#159ee8);
+}
+
+.advanced{
+    background:linear-gradient(135deg,#6331bd,#914ce0);
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card-icon{
+    font-size:38px;
+}
+
+.card h3{
+    color:#073b7c;
+    margin:8px 0;
+}
+
+.card p{
+    color:#5b6678;
+}
+
+.card button{
+    width:100%;
+    margin-top:15px;
+    padding:11px;
+    border:none;
+    border-radius:10px;
+    background:#073b7c;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+
+/* =========================
+   LEVEL CONTENT
+========================= */
+
+.level-content{
+    margin-top:30px;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+.level-content h3{
+    color:#073b7c;
+    margin-bottom:10px;
+}
+
+.level-content ul{
+    margin-left:20px;
+}
+
+
+/* =========================
+   LESSON AREA
+========================= */
+
+.lesson-area{
+    margin-top:35px;
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+.lesson{
+    display:none;
+}
+
+.lesson.active{
+    display:block;
+}
+
+.lesson h2{
+    color:#073b7c;
+    margin-bottom:15px;
+}
+
+.lesson h3{
+    margin-top:20px;
+    color:#173b68;
+}
+
+
+/* =========================
+   AUDIO CARDS
+========================= */
+
+.audio-card{
+    background:#eef5ff;
+    padding:18px;
+    border-radius:15px;
+    margin:12px 0;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.sound-btn{
+    min-width:52px;
+    min-height:52px;
+    border:none;
+    border-radius:50%;
+    background:#073b7c;
+    color:white;
+    font-size:23px;
+    cursor:pointer;
+}
+
+.sound-btn:active{
+    transform:scale(.92);
+}
+
+
+/* =========================
+   PHONETICS
+========================= */
+
+.phonetics-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-top:20px;
+}
+
+.phonetic-card{
+    background:#f3f6fa;
+    padding:18px;
+    text-align:center;
+    border-radius:15px;
+}
+
+.phonetic-card strong{
+    display:block;
+    font-size:27px;
+    color:#073b7c;
+}
+
+.phonetic-card p{
+    margin:5px;
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+.history-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.history-card{
+    background:linear-gradient(135deg,#ffffff,#edf5ff);
+    border-left:6px solid #073b7c;
+    border-radius:15px;
+    padding:24px;
+}
+
+.history-card h3{
+    color:#073b7c;
+    margin-bottom:12px;
+}
+
+.country{
+    background:white;
+    padding:13px;
+    margin:9px 0;
+    border-radius:10px;
+}
+
+
+/* =========================
+   CONVERSATION
+========================= */
+
+.dialogue{
+    background:#f4f8ff;
+    padding:20px;
+    border-radius:15px;
+}
+
+.line{
+    padding:12px;
+    margin:8px 0;
+    border-radius:10px;
+}
+
+.alex{
+    background:#dcecff;
+}
+
+.student{
+    background:#e4f7e9;
+}
+
+
+/* =========================
+   QUIZ
+========================= */
+
+.quiz{
+    margin-top:25px;
+    background:#fff8d8;
+    padding:25px;
+    border-radius:18px;
+}
+
+.quiz-question{
+    font-size:19px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.quiz-option{
+    display:block;
+    width:100%;
+    max-width:600px;
+    margin:8px 0;
+    padding:13px;
+    border:1px solid #ccd3dd;
+    background:white;
+    border-radius:10px;
+    cursor:pointer;
+    text-align:left;
+}
+
+.quiz-option:hover{
+    background:#edf4ff;
+}
+
+.quiz-result{
+    margin-top:15px;
+    font-weight:bold;
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-box{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+.progress{
+    width:100%;
+    height:18px;
+    background:#ddd;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#087ed0;
+    transition:1s;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    background:#061b3a;
+    color:white;
+    text-align:center;
+    padding:40px 20px;
+}
+
+footer .footer-logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+footer span{
+    color:#ffd21c;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:950px){
+
+    nav{
+        display:none;
+    }
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .phonetics-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .hero{
+        min-height:500px;
+        padding:40px 6%;
+    }
+
+    .hero h1{
+        font-size:35px;
+    }
+
+    .hero p{
+        font-size:17px;
+    }
+
+    .levels{
+        grid-template-columns:1fr;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .history-grid{
+        grid-template-columns:1fr;
+    }
+
+    .phonetics-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .audio-card{
+        align-items:flex-start;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="navbar">
+
+<div class="brand">
+
+<div class="usa-flag"></div>
+
+📖 English <span>with Alex</span>
+
+</div>
+
+<nav>
+
+<button onclick="goHome()">🏠 Home</button>
+<button onclick="openLesson('listening')">🎧 Listening</button>
+<button onclick="openLesson('speaking')">🎤 Speaking</button>
+<button onclick="openLesson('vocabulary')">📚 Vocabulary</button>
+<button onclick="openLesson('grammar')">✍️ Grammar</button>
+<button onclick="openLesson('phonetics')">🔤 Phonetics</button>
+<button onclick="openLesson('history')">🌍 History</button>
+
+</nav>
+
+</div>
+
+</header>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<div class="tagline">
+🇺🇸 LEARN • PRACTICE • SPEAK • DISCOVER
+</div>
+
+<h1>
+Welcome to English
+<span>with Alex</span>
+</h1>
+
+<p>
+Improve your English step by step.
+Develop your listening, vocabulary,
+grammar, pronunciation and speaking skills
+while discovering the English-speaking world.
+</p>
+
+<button class="btn primary" onclick="startLearning()">
+🚀 Start Learning
+</button>
+
+<button class="btn secondary"
+onclick="speakText('Welcome to English with Alex. Let us learn English together.')">
+🔊 Listen
+</button>
+
+
+<div class="audio-panel">
+
+<button onclick="testVoice()">
+🔊 Test English Voice
+</button>
+
+<button onclick="loadVoices()">
+🔄 Load Voice
+</button>
+
+<div class="audio-status" id="audioStatus">
+Checking English voice...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     LEVELS
+========================= -->
+
+<section class="content-section">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>🎯 Choose Your Level</h2>
+
+<p>
+Start where you are and progress at your own pace.
+</p>
+
+</div>
+
+
+<div class="levels">
+
+<div class="level beginner"
+onclick="selectLevel('Beginner')">
+
+<h3>🌱 Beginner</h3>
+
+<p>
+Build your English foundation.
+</p>
+
+</div>
+
+
+<div class="level intermediate"
+onclick="selectLevel('Intermediate')">
+
+<h3>📈 Intermediate</h3>
+
+<p>
+Improve your communication.
+</p>
+
+</div>
+
+
+<div class="level advanced"
+onclick="selectLevel('Advanced')">
+
+<h3>⭐ Advanced</h3>
+
+<p>
+Speak with confidence and precision.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="level-content" id="levelContent">
+
+<h3>🌱 Beginner</h3>
+
+<p>
+Start with basic vocabulary, simple sentences,
+everyday conversations and essential grammar.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     MAIN LEARNING AREAS
+========================= -->
+
+<section class="content-section">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>📚 Your English Journey</h2>
+
+<p>
+Everything you need in one place.
+</p>
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="card-icon">🎧</div>
+
+<h3>Listening</h3>
+
+<p>
+Train your ears and understand spoken English.
+</p>
+
+<button onclick="openLesson('listening')">
+Start Listening
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-icon">🎤</div>
+
+<h3>Speaking & Shadowing</h3>
+
+<p>
+Listen, repeat and develop natural English rhythm.
+</p>
+
+<button onclick="openLesson('speaking')">
+Start Speaking
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-icon">📚</div>
+
+<h3>Vocabulary</h3>
+
+<p>
+Learn useful words and expressions.
+</p>
+
+<button onclick="openLesson('vocabulary')">
+Learn Vocabulary
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-icon">✍️</div>
+
+<h3>Grammar</h3>
+
+<p>
+Understand grammar and use it correctly.
+</p>
+
+<button onclick="openLesson('grammar')">
+Study Grammar
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-icon">🔤</div>
+
+<h3>Phonetics</h3>
+
+<p>
+Discover English sounds and IPA.
+</p>
+
+<button onclick="openLesson('phonetics')">
+Study Phonetics
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-icon">🌍</div>
+
+<h3>African English</h3>
+
+<p>
+Discover English-speaking Africa.
+</p>
+
+<button onclick="openLesson('africa')">
+Explore Africa
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-icon">🇺🇸</div>
+
+<h3>Western English</h3>
+
+<p>
+Discover major Western English-speaking countries.
+</p>
+
+<button onclick="openLesson('western')">
+Explore Countries
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-icon">💬</div>
+
+<h3>Conversation</h3>
+
+<p>
+Practice English in real-life situations.
+</p>
+
+<button onclick="openLesson('conversation')">
+Practice
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     LESSON AREA
+========================= -->
+
+<div class="lesson-area">
+
+
+<!-- LISTENING -->
+
+<div class="lesson" id="listening">
+
+<h2>🎧 Listening Practice</h2>
+
+<p>
+Listen carefully. Repeat the sentence.
+Then try to understand it without reading.
+</p>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+I want to improve my English every day.
+</strong>
+
+<br>
+
+<small>
+Je veux améliorer mon anglais chaque jour.
+</small>
+
+</div>
+
+<button class="sound-btn"
+onclick="speakText('I want to improve my English every day.')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+English can open many doors in life.
+</strong>
+
+<br>
+
+<small>
+L'anglais peut ouvrir beaucoup de portes dans la vie.
+</small>
+
+</div>
+
+<button class="sound-btn"
+onclick="speakText('English can open many doors in life.')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+I am not afraid of making mistakes.
+</strong>
+
+<br>
+
+<small>
+Je n'ai pas peur de faire des erreurs.
+</small>
+
+</div>
+
+<button class="sound-btn"
+onclick="speakText('I am not afraid of making mistakes.')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+Practice makes progress.
+</strong>
+
+<br>
+
+<small>
+La pratique permet de progresser.
+</small>
+
+</div>
+
+<button class="sound-btn"
+onclick="speakText('Practice makes progress.')">
+🔊
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- SPEAKING -->
+
+<div class="lesson" id="speaking">
+
+<h2>🎤 Speaking & Shadowing</h2>
+
+<p>
+Listen → Repeat → Record yourself → Compare → Repeat again.
+</p>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+Hello, my name is Alex. I am learning English.
+</strong>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('Hello, my name is Alex. I am learning English.')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+I want to become a confident English speaker.
+</strong>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('I want to become a confident English speaker.')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+Could you please repeat that?
+</strong>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('Could you please repeat that?')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+I understand what you mean.
+</strong>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('I understand what you mean.')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+I will not stop improving because of fear.
+</strong>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('I will not stop improving because of fear.')">
+🔊
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- VOCABULARY -->
+
+<div class="lesson" id="vocabulary">
+
+<h2>📚 Vocabulary</h2>
+
+<p>
+Click 🔊 to hear each word.
+</p>
+
+
+<div class="audio-card">
+
+<div>
+<strong>Opportunity</strong>
+<br>
+<small>A possibility to do something.</small>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('Opportunity')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>Confidence</strong>
+<br>
+<small>Belief in your abilities.</small>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('Confidence')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>Improve</strong>
+<br>
+<small>To become better.</small>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('Improve')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>Goal</strong>
+<br>
+<small>Something you want to achieve.</small>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('Goal')">
+🔊
+</button>
+
+</div>
+
+
+<div class="audio-card">
+
+<div>
+<strong>Success</strong>
+<br>
+<small>Achievement of a desired result.</small>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('Success')">
+🔊
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- GRAMMAR -->
+
+<div class="lesson" id="grammar">
+
+<h2>✍️ Grammar</h2>
+
+
+<h3>Present Simple</h3>
+
+<p>
+Use the present simple for habits, routines and facts.
+</p>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+I study English every day.
+</strong>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('I study English every day.')">
+🔊
+</button>
+
+</div>
+
+
+<h3>Past Simple</h3>
+
+<p>
+Use the past simple for completed actions in the past.
+</p>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+I studied English yesterday.
+</strong>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('I studied English yesterday.')">
+🔊
+</button>
+
+</div>
+
+
+<h3>Future</h3>
+
+<p>
+Use "will" for many future statements and decisions.
+</p>
+
+
+<div class="audio-card">
+
+<div>
+<strong>
+I will improve my English.
+</strong>
+</div>
+
+<button class="sound-btn"
+onclick="speakText('I will improve my English.')">
+🔊
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- PHONETICS -->
+
+<div class="lesson" id="phonetics">
+
+<h2>🔤 English Phonetics</h2>
+
+<p>
+The International Phonetic Alphabet (IPA) helps us understand
+how English words are pronounced.
+</p>
+
+
+<div class="phonetics-grid">
+
+
+<div class="phonetic-card">
+
+<strong>/iː/</strong>
+
+<p>see</p>
+
+<button class="sound-btn"
+onclick="speakText('see')">
+🔊
+</button>
+
+</div>
+
+
+<div class="phonetic-card">
+
+<strong>/ɪ/</strong>
+
+<p>sit</p>
+
+<button class="sound-btn"
+onclick="speakText('sit')">
+🔊
+</button>
+
+</div>
+
+
+<div class="phonetic-card">
+
+<strong>/æ/</strong>
+
+<p>cat</p>
+
+<button class="sound-btn"
+onclick="speakText('cat')">
+🔊
+</button>
+
+</div>
+
+
+<div class="phonetic-card">
+
+<strong>/ʌ/</strong>
+
+<p>cup</p>
+
+<button class="sound-btn"
+onclick="speakText('cup')">
+🔊
+</button>
+
+</div>
+
+
+<div class="phonetic-card">
+
+<strong>/θ/</strong>
+
+<p>think</p>
+
+<button class="sound-btn"
+onclick="speakText('think')">
+🔊
+</button>
+
+</div>
+
+
+<div class="phonetic-card">
+
+<strong>/ð/</strong>
+
+<p>this</p>
+
+<button class="sound-btn"
+onclick="speakText('this')">
+🔊
+</button>
+
+</div>
+
+
+<div class="phonetic-card">
+
+<strong>/ʃ/</strong>
+
+<p>she</p>
+
+<button class="sound-btn"
+onclick="speakText('she')">
+🔊
+</button>
+
+</div>
+
+
+<div class="phonetic-card">
+
+<strong>/tʃ/</strong>
+
+<p>chair</p>
+
+<button class="sound-btn"
+onclick="speakText('chair')">
+🔊
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =====================================================
+     ENGLISH-SPEAKING COUNTRIES
+===================================================== -->
+
+<div class="lesson" id="africa">
+
+<h2>🌍 African English-Speaking Countries</h2>
+
+<p>
+Explore the history, identity, languages, cultures, beliefs and
+English varieties of African countries where English has an important role.
+</p>
+
+<div id="africanCountries"></div>
+
+</div>
+
+
+<div class="lesson" id="western">
+
+<h2>🌎 Western English-Speaking Countries</h2>
+
+<p>
+Discover the history, identity, culture and English of major
+English-speaking countries outside Africa.
+</p>
+
+<div id="westernCountries"></div>
+
+</div>
+<!-- CONVERSATION -->
+
+<div class="lesson" id="conversation">
+
+<h2>💬 Real-Life Conversation</h2>
+
+<p>
+Practice useful conversations that you can use in real life.
+</p>
+
+
+<div class="dialogue">
+
+<div class="line alex">
+<strong>Alex:</strong>
+Hello! How are you today?
+</div>
+
+<div class="line student">
+<strong>Student:</strong>
+I'm fine, thank you. How about you?
+</div>
+
+<div class="line alex">
+<strong>Alex:</strong>
+I'm doing great. What are you studying?
+</div>
+
+<div class="line student">
+<strong>Student:</strong>
+I'm studying English.
+</div>
+
+<div class="line alex">
+<strong>Alex:</strong>
+That's great! Why are you learning English?
+</div>
+
+<div class="line student">
+<strong>Student:</strong>
+Because I want to communicate with people from around the world.
+</div>
+
+</div>
+
+
+<br>
+
+<button class="btn primary"
+onclick="speakText('Hello! How are you today?')">
+🔊 Practice Dialogue
+</button>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     QUIZ
+========================= -->
+
+<div class="quiz">
+
+<h2>🧠 Quick English Quiz</h2>
+
+<br>
+
+<div class="quiz-question">
+1. Choose the correct sentence:
+</div>
+
+<button class="quiz-option"
+onclick="quizAnswer(this,false)">
+He go to school every day.
+</button>
+
+<button class="quiz-option"
+onclick="quizAnswer(this,true)">
+He goes to school every day.
+</button>
+
+<button class="quiz-option"
+onclick="quizAnswer(this,false)">
+He going to school every day.
+</button>
+
+<div class="quiz-result" id="quizResult"></div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     PROGRESS
+========================= -->
+
+<section class="content-section">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>📊 Your Progress</h2>
+
+<p>
+Every lesson brings you closer to your goal.
+</p>
+
+</div>
+
+
+<div class="progress-box">
+
+<div class="progress">
+
+<div class="progress-bar"
+id="progressBar">
+</div>
+
+</div>
+
+<br>
+
+<p style="text-align:center">
+
+<strong id="progressText">
+0% completed
+</strong>
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<div class="footer-logo">
+
+📖 English <span>with Alex</span>
+
+</div>
+
+<br>
+
+<p>
+Learn • Practice • Speak • Discover
+</p>
+
+<br>
+
+<p>
+"Better English. More opportunities. A brighter future."
+</p>
+
+<br>
+
+<p>
+© 2026 English with Alex
+</p>
+
+</footer>
+
+
+
+<script>
+
+/* =====================================================
+   ENGLISH WITH ALEX
+   AUDIO ENGINE
+===================================================== */
+
+let voices = [];
+let selectedVoice = null;
+
+
+/* Load available voices */
+
+function loadVoices(){
+
+    if(!("speechSynthesis" in window)){
+
+        document.getElementById("audioStatus").innerText =
+        "❌ Speech synthesis is not supported.";
+
+        return;
+    }
+
+    voices = window.speechSynthesis.getVoices();
+
+    /* Find an American English voice first */
+
+    selectedVoice =
+    voices.find(v =>
+        v.lang === "en-US"
+    );
+
+    /* If there is no American voice,
+       find any English voice */
+
+    if(!selectedVoice){
+
+        selectedVoice =
+        voices.find(v =>
+            v.lang.startsWith("en")
+        );
+
+    }
+
+
+    if(selectedVoice){
+
+        document.getElementById("audioStatus").innerText =
+        "✅ English voice ready: " +
+        selectedVoice.name;
+
+    }else{
+
+        document.getElementById("audioStatus").innerText =
+        "⚠️ No English voice found yet. Tap Load Voice again.";
+
+    }
+
+}
+
+
+/* Android / Chrome sometimes loads voices later */
+
+if("speechSynthesis" in window){
+
+    window.speechSynthesis.onvoiceschanged =
+    loadVoices;
+
+    setTimeout(loadVoices,500);
+
+    setTimeout(loadVoices,1500);
+
+}
+
+
+/* MAIN AUDIO FUNCTION */
+
+function speakText(text){
+
+    if(!("speechSynthesis" in window)){
+
+        alert(
+        "Your browser does not support English voice playback."
+        );
+
+        return;
+    }
+
+
+    /* Stop previous sentence */
+
+    window.speechSynthesis.cancel();
+
+
+    let utterance =
+    new SpeechSynthesisUtterance(text);
+
+
+    /* English */
+
+    utterance.lang = "en-US";
+
+
+    /* Slow enough for learners */
+
+    utterance.rate = 0.82;
+
+    utterance.pitch = 1;
+
+
+    /* Use English voice */
+
+    if(!selectedVoice){
+
+        loadVoices();
+
+    }
+
+
+    if(selectedVoice){
+
+        utterance.voice = selectedVoice;
+
+    }
+
+
+    utterance.onstart = function(){
+
+        document.getElementById("audioStatus").innerText =
+        "🔊 Speaking...";
+
+    };
+
+
+    utterance.onend = function(){
+
+        document.getElementById("audioStatus").innerText =
+        "✅ Voice ready.";
+
+    };
+
+
+    utterance.onerror = function(){
+
+        document.getElementById("audioStatus").innerText =
+        "❌ Voice error. Check your phone's text-to-speech settings.";
+
+    };
+
+
+    window.speechSynthesis.speak(utterance);
+
+}
+
+
+/* AUDIO TEST */
+
+function testVoice(){
+
+    speakText(
+    "Hello! Welcome to English with Alex. This is your English pronunciation test."
+    );
+
+}
+/* =====================================================
+   COUNTRY EXPLORER — ENGLISH WITH ALEX
+===================================================== */
+
+function makeCountry(
+    name, flag, capital, region, languages, independence,
+    history, identity, culture, beliefs, food, music,
+    english, translation, fact, quiz
+){
+    return {
+        name,
+        flag,
+        capital,
+        region,
+        languages,
+        independence,
+        history,
+        identity,
+        culture,
+        beliefs,
+        food,
+        music,
+        english,
+        translation,
+        fact,
+        quiz
+    };
+}
+
+
+/* =====================================================
+   AFRICAN COUNTRIES
+===================================================== */
+
+const africanCountries = [
+
+makeCountry(
+"Ghana","🇬🇭","Accra","West Africa",
+"English; Akan; Ewe; Ga; Dagbani and other Ghanaian languages",
+"6 March 1957",
+
+"Ghana has a long history of kingdoms, trading societies and coastal states. The Ashanti Empire became a major political power. European trading expanded from the late 15th century and Britain eventually established colonial rule over the Gold Coast. Ghana became independent in 1957 under Kwame Nkrumah.",
+
+"Ghanaian identity is built from many peoples and traditions, including Akan, Ewe, Ga-Dangme and Mole-Dagbani communities. The Black Star is a major national symbol.",
+
+"Ghana is known for Kente textiles, traditional festivals, storytelling, drumming, dancing, colourful clothing and strong community traditions.",
+
+"Christianity is the largest religious tradition. Islam is also important, while traditional African beliefs and practices continue to influence cultural life. Religious freedom is protected.",
+
+"Jollof rice, banku, fufu, waakye, kenkey, soups and stews are popular.",
+
+"Highlife, hiplife, Afrobeats and gospel are important parts of Ghanaian music.",
+
+"English is the main official language of government and education. Ghanaian English exists alongside many indigenous languages.",
+
+[
+["Good morning","Bonjour"],
+["Welcome","Bienvenue"],
+["Thank you","Merci"],
+["Friend","Ami(e)"],
+["Family","Famille"]
+],
+
+"Ghana became independent in 1957 and became an important symbol of African decolonisation.",
+
+[
+"What is the capital of Ghana?",
+["Accra","Lagos","Nairobi","Kampala"],0
+]
+),
+
+
+makeCountry(
+"Nigeria","🇳🇬","Abuja","West Africa",
+"English; Hausa; Yoruba; Igbo; Nigerian Pidgin and hundreds of other languages",
+"1 October 1960",
+
+"Present-day Nigeria has a very long history including Nok culture, Ife, Benin, Oyo, Nri and the Sokoto Caliphate. Britain consolidated colonial control and created the Colony and Protectorate of Nigeria. Nigeria became independent in 1960. The country experienced military rule and the Biafran War before returning to civilian democracy in 1999.",
+
+"Nigeria is one of Africa's most culturally diverse countries. Hausa, Yoruba, Igbo and hundreds of other communities contribute to a broad Nigerian identity.",
+
+"Nigerian culture includes literature, fashion, film, festivals, traditional ceremonies, visual arts and a very strong popular culture.",
+
+"Christianity and Islam are the two largest religions. Traditional religious practices also remain culturally important in many communities.",
+
+"Jollof rice, pounded yam, egusi soup, suya, moi moi and many regional dishes are popular.",
+
+"Afrobeats, highlife, fuji, juju and traditional music are important Nigerian styles.",
+
+"English is the principal official language and is widely used in education, government, business and media. Nigerian Pidgin is also widely spoken.",
+
+[
+["How are you?","Comment vas-tu ?"],
+["I understand","Je comprends"],
+["See you later","À plus tard"],
+["Good luck","Bonne chance"],
+["Let's go","Allons-y"]
+],
+
+"Nigeria has one of Africa's largest populations and one of the continent's most influential entertainment industries.",
+
+[
+"What is the capital of Nigeria?",
+["Abuja","Lagos","Kano","Ibadan"],0
+]
+),
+
+
+makeCountry(
+"Kenya","🇰🇪","Nairobi","East Africa",
+"English; Swahili; Kikuyu; Luo; Kalenjin and other languages",
+"12 December 1963",
+
+"Kenya was home to many communities and trading networks before colonial rule. Britain established the East Africa Protectorate and later the Kenya Colony. The country became independent in 1963 and became a republic in 1964.",
+
+"Kenyan identity includes many communities such as Kikuyu, Luo, Luhya, Kalenjin, Kamba, Kisii, Maasai and others.",
+
+"Kenya is known for its wildlife heritage, athletics, traditional music, dance, crafts, coastal culture and diverse cuisine.",
+
+"Christianity is the largest religious tradition. Islam is especially important along the coast, and traditional beliefs also influence cultural life.",
+
+"Ugali, nyama choma, sukuma wiki, chapati and pilau are popular foods.",
+
+"Benga, genge, gospel and modern Kenyan popular music are important.",
+
+"English and Swahili are the two official languages. Kenyan English is widely used in education, government and professional life.",
+
+[
+["Good morning","Bonjour"],
+["I am learning English","J'apprends l'anglais"],
+["Where are you from?","D'où viens-tu ?"],
+["See you tomorrow","À demain"],
+["Well done","Bravo"]
+],
+
+"Kenya is internationally famous for long-distance athletics and wildlife conservation.",
+
+[
+"What are Kenya's official languages?",
+["English and Swahili","English and French","Swahili and Arabic","English only"],0
+]
+),
+
+
+makeCountry(
+"Uganda","🇺🇬","Kampala","East Africa",
+"English; Swahili; Luganda and many local languages",
+"9 October 1962",
+
+"Several kingdoms and societies existed in the region before colonial rule, including Buganda, Bunyoro and Toro. Britain incorporated the territory into its colonial system. Uganda became independent in 1962.",
+
+"Ugandan identity combines many ethnic communities and historical kingdoms.",
+
+"Music, dance, storytelling, crafts and community ceremonies are important elements of Ugandan culture.",
+
+"Christianity is widespread. Islam is also important, and traditional beliefs continue to influence some cultural practices.",
+
+"Matoke, posho, rolex, groundnut sauce and many stews are popular.",
+
+"Traditional drumming, dance, gospel and modern Ugandan pop are popular.",
+
+"English is an official language and an important language of education and administration.",
+
+[
+["Welcome to Uganda","Bienvenue en Ouganda"],
+["Thank you","Merci"],
+["Good evening","Bonsoir"],
+["I am ready","Je suis prêt"],
+["Let's learn","Apprenons"]
+],
+
+"Uganda is sometimes called the Pearl of Africa because of its landscapes and biodiversity.",
+
+[
+"What is the capital of Uganda?",
+["Kampala","Nairobi","Kigali","Juba"],0
+]
+),
+
+
+makeCountry(
+"South Africa","🇿🇦","Pretoria / Cape Town / Bloemfontein","Southern Africa",
+"English; isiZulu; isiXhosa; Afrikaans; Sesotho and other official languages",
+"27 April 1994",
+
+"South Africa has a very long human history and many precolonial societies. European settlement expanded from the 17th century. Colonialism, segregation and apartheid shaped the modern country. In 1994 South Africa held its first democratic elections based on universal adult suffrage.",
+
+"South African identity is highly diverse and includes many languages, communities and historical experiences.",
+
+"South African culture includes traditional arts, dance, fashion, festivals, sport, literature, cinema and a wide range of regional traditions.",
+
+"Christianity is widespread. Islam, Hinduism, Judaism, traditional African religions and other beliefs are also present.",
+
+"Bobotie, pap, chakalaka, bunny chow, braai and many regional dishes are popular.",
+
+"Amapiano, kwaito, jazz, gospel and traditional music are influential.",
+
+"English is one of South Africa's 12 official languages and is widely used in business, higher education, government and media.",
+
+[
+["Howzit?","Salut / Ça va ?"],
+["Welcome","Bienvenue"],
+["Thank you","Merci"],
+["See you soon","À bientôt"],
+["Well done","Bravo"]
+],
+
+"South Africa has 12 official languages and three capital cities with different governmental functions.",
+
+[
+"How many official languages does South Africa have?",
+["12","5","8","20"],0
+]
+),
+
+
+makeCountry(
+"Zambia","🇿🇲","Lusaka","Southern Africa",
+"English; Bemba; Nyanja; Tonga and other languages",
+"24 October 1964",
+
+"The region was home to many African communities and kingdoms before British colonial rule. The territory became Northern Rhodesia under British administration. Zambia became independent in 1964.",
+
+"Zambian identity is shaped by many ethnic communities and strong traditions of community life.",
+
+"Traditional ceremonies, music, dance, crafts and storytelling are important.",
+
+"Christianity is the dominant religious tradition, alongside traditional beliefs and other religions.",
+
+"Nshima, ifisashi, chikanda and many vegetable and meat dishes are common.",
+
+"Traditional music, gospel and contemporary Zambian music are popular.",
+
+"English is the official language and is important in education, government and business.",
+
+[
+["Good morning","Bonjour"],
+["Thank you","Merci"],
+["I agree","Je suis d'accord"],
+["I don't know","Je ne sais pas"],
+["See you","À bientôt"]
+],
+
+"Victoria Falls on the Zambezi River is one of the region's best-known natural landmarks.",
+
+[
+"What is the capital of Zambia?",
+["Lusaka","Harare","Gaborone","Maputo"],0
+]
+),
+
+
+makeCountry(
+"Zimbabwe","🇿🇼","Harare","Southern Africa",
+"English; Shona; Ndebele and other languages",
+"18 April 1980",
+
+"Great Zimbabwe was the centre of an important medieval civilisation. The region later came under British colonial rule. Zimbabwe gained internationally recognised independence in 1980.",
+
+"Zimbabwean identity includes Shona, Ndebele and many other communities.",
+
+"Stone sculpture, music, dance, storytelling and traditional ceremonies are important.",
+
+"Christianity is widespread alongside traditional beliefs and other religious traditions.",
+
+"Sadza, nyama, muriwo and many regional dishes are common.",
+
+"Mbira music is particularly associated with Zimbabwe, alongside gospel and modern music.",
+
+"English is an official language and is widely used in education, administration and business.",
+
+[
+["Welcome","Bienvenue"],
+["Good luck","Bonne chance"],
+["I understand","Je comprends"],
+["Let's go","Allons-y"],
+["Thank you","Merci"]
+],
+
+"Great Zimbabwe is one of Africa's most important archaeological monuments.",
+
+[
+"What is the capital of Zimbabwe?",
+["Harare","Bulawayo","Lusaka","Mutare"],0
+]
+),
+
+
+makeCountry(
+"Botswana","🇧🇼","Gaborone","Southern Africa",
+"English; Setswana and other languages",
+"30 September 1966",
+
+"Before independence, Tswana-speaking communities formed important political societies. The territory became the British Bechuanaland Protectorate and gained independence in 1966.",
+
+"Botswana has a strong national identity influenced by Tswana traditions and many other communities.",
+
+"Traditional cattle culture, crafts, music, dance and community meetings are important.",
+
+"Christianity is widespread and traditional beliefs continue to influence cultural practices.",
+
+"Seswaa, pap, morogo and other traditional dishes are popular.",
+
+"Traditional music and dance coexist with modern Botswana music.",
+
+"English is the official language while Setswana is widely spoken.",
+
+[
+["Good morning","Bonjour"],
+["Welcome","Bienvenue"],
+["Thank you","Merci"],
+["Friend","Ami"],
+["Family","Famille"]
+],
+
+"The Okavango Delta is one of Botswana's most famous natural environments.",
+
+[
+"What is the capital of Botswana?",
+["Gaborone","Maun","Francistown","Lobatse"],0
+]
+),
+
+
+makeCountry(
+"Sierra Leone","🇸🇱","Freetown","West Africa",
+"English; Krio; Temne; Mende and other languages",
+"27 April 1961",
+
+"Freetown was founded in the late 18th century as a settlement for formerly enslaved people. Sierra Leone later became a British colony and gained independence in 1961.",
+
+"Sierra Leonean identity is shaped by many communities and the important role of Krio culture.",
+
+"Music, storytelling, dance, colourful clothing and coastal traditions are important.",
+
+"Islam and Christianity are the two major religions. Traditional beliefs also remain culturally significant.",
+
+"Rice is a major staple, with cassava, fish, stews and soups also common.",
+
+"Afrobeat, gospel, traditional music and local popular music are important.",
+
+"English is the official language while Krio is widely used as a lingua franca.",
+
+[
+["Welcome","Bienvenue"],
+["How are you?","Comment vas-tu ?"],
+["Thank you","Merci"],
+["Come in","Entre"],
+["Take care","Prends soin de toi"]
+],
+
+"Freetown became a major historical centre for formerly enslaved Africans returning to West Africa.",
+
+[
+"What is the capital of Sierra Leone?",
+["Freetown","Bo","Koidu","Kenema"],0
+]
+),
+
+
+makeCountry(
+"Liberia","🇱🇷","Monrovia","West Africa",
+"English; Liberian English; Kpelle; Bassa and other languages",
+"26 July 1847",
+
+"Liberia was established in the 19th century in connection with the settlement of formerly enslaved African Americans. It declared independence in 1847 and became one of Africa's oldest modern republics.",
+
+"Liberian identity combines many indigenous communities with the history of settlers from the United States.",
+
+"Music, storytelling, community traditions, clothing and cuisine reflect both African and American influences.",
+
+"Christianity and Islam are important, while indigenous beliefs remain culturally significant.",
+
+"Rice, cassava, plantains, fish, soups and stews are common.",
+
+"Traditional music, gospel and modern Liberian music are popular.",
+
+"English is the official language and Liberian English varieties are widely spoken.",
+
+[
+["Good morning","Bonjour"],
+["Welcome","Bienvenue"],
+["I am happy","Je suis heureux"],
+["Thank you","Merci"],
+["See you later","À plus tard"]
+],
+
+"Liberia was founded by people of African descent connected to the American colonisation movement.",
+
+[
+"What is the capital of Liberia?",
+["Monrovia","Gbarnga","Kakata","Buchanan"],0
+]
+),
+
+
+makeCountry(
+"The Gambia","🇬🇲","Banjul","West Africa",
+"English; Mandinka; Wolof; Fula and other languages",
+"18 February 1965",
+
+"The Gambia developed around the Gambia River and was influenced by several West African kingdoms and trading networks. Britain established colonial control and the country became independent in 1965.",
+
+"Gambian identity includes Mandinka, Fula, Wolof, Jola and many other communities.",
+
+"Music, griot storytelling, dance, textiles, festivals and river-based traditions are important.",
+
+"Islam is the majority religion. Christianity and traditional beliefs are also present.",
+
+"Benachin, domoda, yassa and rice-based dishes are popular.",
+
+"Mbalax, reggae, gospel and traditional music are popular.",
+
+"English is the official language, while several local languages are widely spoken.",
+
+[
+["Welcome","Bienvenue"],
+["Good morning","Bonjour"],
+["Thank you","Merci"],
+["My friend","Mon ami"],
+["See you tomorrow","À demain"]
+],
+
+"The Gambia is almost completely surrounded by Senegal except for its Atlantic coastline.",
+
+[
+"What is the capital of The Gambia?",
+["Banjul","Dakar","Serrekunda","Brikama"],0
+]
+),
+
+
+makeCountry(
+"Malawi","🇲🇼","Lilongwe","Southeast Africa",
+"English; Chichewa; Tumbuka and other languages",
+"6 July 1964",
+
+"Malawi was home to several African communities before becoming part of the British colonial system as Nyasaland. It became independent in 1964.",
+
+"Malawian identity is strongly connected to local communities, languages, music and life around Lake Malawi.",
+
+"Traditional dance, music, crafts and community ceremonies are important.",
+
+"Christianity is the majority religion, with Islam and traditional beliefs also present.",
+
+"Nsima, fish, beans, vegetables and rice are common.",
+
+"Gule Wamkulu, gospel and contemporary music are important.",
+
+"English is an official language while Chichewa is widely spoken.",
+
+[
+["Welcome","Bienvenue"],
+["Thank you","Merci"],
+["Good luck","Bonne chance"],
+["I understand","Je comprends"],
+["Let's go","Allons-y"]
+],
+
+"Lake Malawi is one of the country's major natural landmarks.",
+
+[
+"What is the capital of Malawi?",
+["Lilongwe","Blantyre","Mzuzu","Zomba"],0
+]
+),
+
+
+makeCountry(
+"Namibia","🇳🇦","Windhoek","Southern Africa",
+"English; Oshiwambo; Afrikaans; Nama and other languages",
+"21 March 1990",
+
+"Namibia has a long history of Indigenous communities and was later colonised by Germany. South African administration followed. Namibia achieved independence in 1990.",
+
+"Namibian identity includes Ovambo, Herero, Nama, Damara, San and many other communities.",
+
+"Traditional clothing, crafts, music, dance and desert-related lifestyles are important.",
+
+"Christianity is widespread, alongside traditional beliefs and other religions.",
+
+"Mahangu-based foods, meat, fish and regional dishes are common.",
+
+"Traditional music and contemporary Namibian music are popular.",
+
+"English is the official language of Namibia.",
+
+[
+["Good morning","Bonjour"],
+["Welcome","Bienvenue"],
+["Thank you","Merci"],
+["I agree","Je suis d'accord"],
+["Take care","Prends soin de toi"]
+],
+
+"Namibia is famous for the Namib Desert and its dramatic landscapes.",
+
+[
+"What is the capital of Namibia?",
+["Windhoek","Swakopmund","Walvis Bay","Oshakati"],0
+]
+),
+
+
+makeCountry(
+"Lesotho","🇱🇸","Maseru","Southern Africa",
+"Sesotho; English",
+"4 October 1966",
+
+"Lesotho developed around the Basotho nation under King Moshoeshoe I. It became the British Protectorate of Basutoland and gained independence in 1966.",
+
+"Basotho identity is strongly connected to Sesotho language, community traditions and the mountain environment.",
+
+"The Basotho blanket, traditional clothing, music, horse culture and ceremonies are important.",
+
+"Christianity is widespread, alongside traditional beliefs.",
+
+"Papa, moroho, beans and meat dishes are common.",
+
+"Traditional singing, choral music and modern music are popular.",
+
+"English and Sesotho are official languages.",
+
+[
+["Welcome","Bienvenue"],
+["Good morning","Bonjour"],
+["Thank you","Merci"],
+["My friend","Mon ami"],
+["Good night","Bonne nuit"]
+],
+
+"Lesotho is a mountainous country completely surrounded by South Africa.",
+
+[
+"What surrounds Lesotho?",
+["South Africa","Botswana","Namibia","Zimbabwe"],0
+]
+),
+
+
+makeCountry(
+"Eswatini","🇸🇿","Mbabane / Lobamba","Southern Africa",
+"English; siSwati",
+"6 September 1968",
+
+"The Swazi nation developed before colonial rule. The territory became a British protectorate and gained independence in 1968.",
+
+"Eswatini's national identity is strongly connected to Swazi culture, monarchy and community traditions.",
+
+"Traditional ceremonies, dance, beadwork, clothing and music are particularly important.",
+
+"Christianity is widespread, with indigenous beliefs and practices also influencing cultural life.",
+
+"Sishwala, maize dishes, meat and vegetables are common.",
+
+"Traditional singing and dance are central to major ceremonies.",
+
+"English and siSwati are official languages.",
+
+[
+["Welcome","Bienvenue"],
+["Thank you","Merci"],
+["Good morning","Bonjour"],
+["Family","Famille"],
+["Friend","Ami"]
+],
+
+"Eswatini is one of Africa's remaining monarchies.",
+
+[
+"What is another official language of Eswatini besides English?",
+["siSwati","French","Arabic","Portuguese"],0
+]
+),
+
+
+makeCountry(
+"Mauritius","🇲🇺","Port Louis","Indian Ocean",
+"English; French; Mauritian Creole and several Asian languages",
+"12 March 1968",
+
+"Mauritius was influenced by Dutch, French and British colonial periods. It became independent from Britain in 1968.",
+
+"Mauritian identity is highly multicultural, combining African, European, Indian and Asian influences.",
+
+"Music, Sega dance, multicultural festivals, cuisine and Creole traditions are important.",
+
+"Hinduism is the largest religious tradition, with Christianity, Islam, Buddhism and other beliefs also present.",
+
+"Dholl puri, rougaille, biryani, seafood and Creole dishes are popular.",
+
+"Sega is one of the best-known musical and dance traditions.",
+
+"English is the official language of government while French and Mauritian Creole are widely used.",
+
+[
+["Welcome to Mauritius","Bienvenue à Maurice"],
+["Thank you","Merci"],
+["How are you?","Comment vas-tu ?"],
+["Good morning","Bonjour"],
+["See you soon","À bientôt"]
+],
+
+"Mauritius is famous for its multicultural population and Indian Ocean location.",
+
+[
+"What is the capital of Mauritius?",
+["Port Louis","Curepipe","Mahebourg","Quatre Bornes"],0
+]
+),
+
+
+makeCountry(
+"Seychelles","🇸🇨","Victoria","Indian Ocean",
+"Seychellois Creole; English; French",
+"29 June 1976",
+
+"Seychelles was influenced by French and British colonial periods before gaining independence in 1976.",
+
+"Seychellois identity reflects African, European and Asian cultural influences.",
+
+"Creole culture, music, dance, crafts and island traditions are important.",
+
+"Christianity is widespread, especially Catholicism, alongside other beliefs.",
+
+"Seafood, rice, curries, fruit and Creole dishes are common.",
+
+"Moutya and Sega are important traditional styles.",
+
+"English, French and Seychellois Creole are official languages.",
+
+[
+["Welcome","Bienvenue"],
+["Good morning","Bonjour"],
+["Thank you","Merci"],
+["Beautiful island","Belle île"],
+["See you soon","À bientôt"]
+],
+
+"Seychelles is an archipelago of islands in the Indian Ocean.",
+
+[
+"What is the capital of Seychelles?",
+["Victoria","Port Louis","Mamoudzou","Saint-Denis"],0
+]
+),
+
+
+makeCountry(
+"Rwanda","🇷🇼","Kigali","East Africa",
+"Kinyarwanda; English; French; Swahili",
+"1 July 1962",
+
+"Rwanda has a long history of kingdoms and organised societies. It was later administered by Germany and Belgium before independence in 1962. The 1994 genocide against the Tutsi profoundly affected the country and its history.",
+
+"Modern Rwandan identity emphasises national unity and reconstruction while recognising the country's complex history.",
+
+"Traditional dance, music, crafts and community activities are important.",
+
+"Christianity is widespread. Islam and traditional beliefs are also present.",
+
+"Ugali, beans, plantains, potatoes and meat dishes are common.",
+
+"Traditional drumming and dance are important cultural expressions.",
+
+"English is one of Rwanda's official languages alongside Kinyarwanda, French and Swahili.",
+
+[
+["Welcome","Bienvenue"],
+["Peace","Paix"],
+["Unity","Unité"],
+["Thank you","Merci"],
+["Let's learn","Apprenons"]
+],
+
+"Rwanda is known for its mountain gorillas and conservation efforts.",
+
+[
+"What is the capital of Rwanda?",
+["Kigali","Kampala","Bujumbura","Nairobi"],0
+]
+),
+
+
+makeCountry(
+"Cameroon","🇨🇲","Yaoundé","Central Africa",
+"French; English; Cameroonian Pidgin English and many local languages",
+"1 January 1960",
+
+"Cameroon has a long history of diverse kingdoms and communities. Different parts of the territory experienced German, British and French colonial administration. The modern state became independent in 1960 and later incorporated the former British Southern Cameroons.",
+
+"Cameroonian identity is highly diverse, with more than 200 ethnic and linguistic communities.",
+
+"Traditional dance, music, food, clothing, festivals and crafts vary greatly by region.",
+
+"Christianity and Islam are major religions. Indigenous beliefs also remain culturally important.",
+
+"Ndolé, eru, achu, fufu, plantains and many regional dishes are popular.",
+
+"Makossa, bikutsi, gospel and traditional music are important.",
+
+"French and English are the two official languages. English is particularly important in the Northwest and Southwest regions.",
+
+[
+["Good morning","Bonjour"],
+["How are you?","Comment vas-tu ?"],
+["Thank you","Merci"],
+["Welcome","Bienvenue"],
+["I understand","Je comprends"]
+],
+
+"Cameroon is often described as having exceptional linguistic and cultural diversity.",
+
+[
+"What are Cameroon's official languages?",
+["French and English","English and Spanish","French and Portuguese","English only"],0
+]
+),
+
+
+makeCountry(
+"South Sudan","🇸🇸","Juba","East-Central Africa",
+"English; Arabic varieties; Dinka; Nuer and other languages",
+"9 July 2011",
+
+"South Sudan has a long history of diverse peoples and communities. It became independent from Sudan in 2011 after decades of conflict and a referendum on self-determination.",
+
+"South Sudanese identity includes many ethnic communities such as Dinka, Nuer, Shilluk and others.",
+
+"Traditional cattle culture, music, dance, ceremonies and storytelling are important.",
+
+"Christianity and traditional African religions are important, with Islam also present.",
+
+"Grains, meat, fish, vegetables and regional stews are common.",
+
+"Traditional singing, drumming and contemporary music are popular.",
+
+"English is the official working language.",
+
+[
+["Peace","Paix"],
+["Welcome","Bienvenue"],
+["Thank you","Merci"],
+["Good morning","Bonjour"],
+["Let's work together","Travaillons ensemble"]
+],
+
+"South Sudan became the world's newest internationally recognised country in 2011.",
+
+[
+"When did South Sudan become independent?",
+["2011","1994","1960","2001"],0
+]
+),
+
+
+makeCountry(
+"Tanzania","🇹🇿","Dodoma","East Africa",
+"Swahili; English and many local languages",
+"9 December 1961 / union in 1964",
+
+"Tanganyika became independent from Britain in 1961. Tanganyika and Zanzibar united in 1964 to form Tanzania.",
+
+"Tanzanian identity is strongly connected to Swahili language and a large number of communities.",
+
+"Coastal Swahili culture, traditional dance, crafts, festivals and mainland traditions are important.",
+
+"Christianity and Islam are major religions, alongside traditional beliefs.",
+
+"Ugali, pilau, chipsi mayai, nyama choma and many coastal dishes are popular.",
+
+"Bongo Flava, taarab and traditional music are influential.",
+
+"Swahili is the dominant national language and English has an important role in higher education, tourism and international communication.",
+
+[
+["Welcome","Bienvenue"],
+["Thank you","Merci"],
+["Good morning","Bonjour"],
+["Where are you from?","D'où viens-tu ?"],
+["See you later","À plus tard"]
+],
+
+"Mount Kilimanjaro is Africa's highest mountain.",
+
+[
+"What is the capital of Tanzania?",
+["Dodoma","Dar es Salaam","Arusha","Mwanza"],0
+]
+),
+
+
+makeCountry(
+"Côte d'Ivoire","🇨🇮","Yamoussoukro","West Africa",
+"French; Dioula; Baoulé; Bété; Sénoufo and many other Ivorian languages",
+"7 August 1960",
+
+"Côte d'Ivoire has a long history of Akan, Mandé, Gur and Kru societies. It became a French colony and gained independence in 1960. Abidjan later became the country's major economic centre while Yamoussoukro is the political capital.",
+
+"Ivorian identity is highly diverse, with many peoples, languages and regional traditions. The concept of hospitality is often strongly associated with Ivorian social life.",
+
+"Ivorian culture includes traditional masks, dance, fashion, festivals, crafts, literature, cinema and modern urban culture.",
+
+"Christianity and Islam are major religions. Traditional African beliefs and practices also remain culturally significant.",
+
+"Attiéké, alloco, foutou, kedjenou, garba, rice dishes and many regional foods are popular.",
+
+"Coupé-décalé, zouglou, reggae and many traditional musical styles are important.",
+
+"French is the official language. English is increasingly learned for international communication, education, business and tourism.",
+
+[
+["Bonjour","Good morning / Hello"],
+["Merci","Thank you"],
+["Bienvenue","Welcome"],
+["Ami","Friend"],
+["Famille","Family"]
+],
+
+"🇨🇮 Special addition: Côte d'Ivoire is included because it is the home country of English with Alex, even though French is the official language.",
+
+[
+"What is the political capital of Côte d'Ivoire?",
+["Yamoussoukro","Abidjan","Bouaké","Korhogo"],0
+]
+)
+
+];
+
+
+/* =====================================================
+   WESTERN ENGLISH-SPEAKING COUNTRIES
+===================================================== */
+
+const westernCountries = [
+
+makeCountry(
+"United States","🇺🇸","Washington, D.C.","North America",
+"English; Spanish and many other languages",
+"4 July 1776",
+
+"The United States developed from Indigenous civilisations, European colonisation and the creation of thirteen British colonies. The Declaration of Independence was adopted in 1776. The country later expanded across North America and experienced the Civil War, industrialisation, civil rights movements and major global influence.",
+
+"American identity is diverse and shaped by Indigenous, European, African, Asian, Latin American and many other communities.",
+
+"American culture includes cinema, music, sports, fashion, literature, technology and diverse regional traditions.",
+
+"Christianity is the largest religious tradition, but the United States is religiously diverse and includes many faiths and non-religious people.",
+
+"Burgers, barbecue, fried chicken, pizza, apple pie and regional foods are popular.",
+
+"Jazz, blues, rock, hip-hop, country, R&B and pop have had enormous global influence.",
+
+"English is the official language of the United States under a 2025 executive order. American English is one of the world's most influential English varieties.",
+
+[
+["What's up?","Ça va ?"],
+["I'm good","Je vais bien"],
+["Take care","Prends soin de toi"],
+["See you later","À plus tard"],
+["Awesome!","Génial !"]
+],
+
+"The United States has one of the world's largest economies and major global influence in technology, entertainment and education.",
+
+[
+"What is the capital of the United States?",
+["Washington, D.C.","New York","Los Angeles","Chicago"],0
+]
+),
+
+
+makeCountry(
+"United Kingdom","🇬🇧","London","Europe",
+"English; Welsh; Scottish Gaelic; Irish and other languages",
+"Political union developed over several centuries",
+
+"The United Kingdom is made up of England, Scotland, Wales and Northern Ireland. Its history includes medieval kingdoms, the development of Parliament, the British Empire, industrialisation and major political and social changes.",
+
+"British identity contains distinct English, Scottish, Welsh and Northern Irish identities.",
+
+"British culture includes literature, theatre, music, football, fashion, royal traditions and regional customs.",
+
+"Christian traditions have historically been important, while modern Britain is religiously diverse and includes many non-religious people.",
+
+"Fish and chips, roast dinner, shepherd's pie, pies and many international foods are popular.",
+
+"Rock, pop, punk, electronic music, grime and many other genres have strong British traditions.",
+
+"English is the dominant language. British English includes many regional accents and vocabulary differences.",
+
+[
+["Cheers!","Merci / À ta santé"],
+["Brilliant!","Excellent !"],
+["Mate","Pote / Ami"],
+["Fancy a tea?","Tu veux un thé ?"],
+["See you","À bientôt"]
+],
+
+"London is one of the world's major financial, cultural and political centres.",
+
+[
+"Which countries make up the United Kingdom?",
+["England, Scotland, Wales and Northern Ireland","England and France","Scotland and Ireland","Wales and England"],0
+]
+),
+
+
+makeCountry(
+"Canada","🇨🇦","Ottawa","North America",
+"English; French and many Indigenous languages",
+"1 July 1867",
+
+"Canada developed from Indigenous nations, French and British colonies. Confederation created the Dominion of Canada in 1867. The country gradually gained greater political independence and developed a bilingual federal system.",
+
+"Canadian identity combines Indigenous, French, British and many immigrant communities.",
+
+"Canada is known for winter sports, hockey, literature, multicultural cities, Indigenous cultures and vast natural landscapes.",
+
+"Canada is religiously diverse and includes Christianity, Islam, Hinduism, Sikhism, Judaism, Indigenous spiritual traditions and non-religious communities.",
+
+"Poutine, maple products, salmon, tourtière and many multicultural foods are popular.",
+
+"Folk, rock, pop, country, hip-hop and Indigenous music are important.",
+
+"English and French are the two official federal languages. Canadian English has its own vocabulary and accent features.",
+
+[
+["How are you doing?","Comment vas-tu ?"],
+["No worries","Pas de souci"],
+["Good job","Bon travail"],
+["See you soon","À bientôt"],
+["Take care","Prends soin de toi"]
+],
+
+"Canada is the second-largest country in the world by total area.",
+
+[
+"What are Canada's two federal official languages?",
+["English and French","English and Spanish","French and German","English only"],0
+]
+),
+
+
+makeCountry(
+"Australia","🇦🇺","Canberra","Oceania",
+"English and many Indigenous and immigrant languages",
+"1 January 1901",
+
+"Australia has one of the world's oldest continuous Indigenous cultural histories. British colonisation began in 1788. Six colonies federated in 1901 to form the Commonwealth of Australia.",
+
+"Australian identity combines Aboriginal and Torres Strait Islander cultures with later immigrant communities.",
+
+"Australian culture includes sport, beach life, outdoor activities, Aboriginal art, music and a strong multicultural influence.",
+
+"Australia is religiously diverse, including Christianity, Islam, Buddhism, Hinduism, Indigenous spiritual traditions and non-religious communities.",
+
+"Meat pies, barbecue, fish and chips, lamingtons and many multicultural foods are popular.",
+
+"Rock, pop, country, electronic and Indigenous Australian music are important.",
+
+"English is the dominant language. Australian English has distinctive vocabulary, pronunciation and informal expressions.",
+
+[
+["G'day","Bonjour / Salut"],
+["No worries","Pas de souci"],
+["Mate","Ami / Pote"],
+["Good on you!","Bravo !"],
+["See you later","À plus tard"]
+],
+
+"Australia is both a country and a continent-sized island nation.",
+
+[
+"What is the capital of Australia?",
+["Canberra","Sydney","Melbourne","Perth"],0
+]
+),
+
+
+makeCountry(
+"New Zealand","🇳🇿","Wellington","Oceania",
+"English; Māori; New Zealand Sign Language",
+"6 February 1840 / modern self-government developed later",
+
+"New Zealand was first settled by Polynesian peoples, especially Māori. The Treaty of Waitangi was signed in 1840 between many Māori chiefs and representatives of the British Crown. New Zealand developed into a self-governing country and later an independent state.",
+
+"New Zealand identity includes Māori heritage and a highly multicultural modern society.",
+
+"Culture includes Māori carving, haka, rugby, outdoor activities, literature, film and music.",
+
+"Christianity has historical importance, while Māori traditions and many other religions and non-religious identities are present.",
+
+"Meat pies, lamb, seafood, pavlova and Māori hāngī are popular.",
+
+"Rock, pop, Māori music and Pacific influences are important.",
+
+"English is the dominant spoken language. Māori and New Zealand Sign Language have official status.",
+
+[
+["Kia ora","Bonjour / Salut"],
+["Thank you","Merci"],
+["Good on you!","Bravo !"],
+["See you","À bientôt"],
+["Take care","Prends soin de toi"]
+],
+
+"New Zealand is famous for its mountains, Māori culture and rugby tradition.",
+
+[
+"What is the capital of New Zealand?",
+["Wellington","Auckland","Christchurch","Hamilton"],0
+]
+),
+
+
+makeCountry(
+"Ireland","🇮🇪","Dublin","Europe",
+"English; Irish and other languages",
+"6 December 1922",
+
+"Ireland has a long Celtic and medieval history. English influence grew over centuries. Most of the island became the Irish Free State in 1922, while Northern Ireland remained part of the United Kingdom.",
+
+"Irish identity is strongly connected to Irish history, language, literature, music and community traditions.",
+
+"Ireland is famous for traditional music, dance, literature, storytelling, Gaelic games and festivals.",
+
+"Christianity has historically been influential, especially Catholicism, but Ireland is increasingly religiously diverse and secular.",
+
+"Irish stew, soda bread, colcannon, seafood and many modern dishes are popular.",
+
+"Traditional Irish music, folk, rock and contemporary music are internationally influential.",
+
+"English is the dominant everyday language and Irish is an official language. Irish English has distinctive vocabulary and expressions.",
+
+[
+["What's the craic?","Quoi de neuf ? / Ça va ?"],
+["Grand","Ça va / Très bien"],
+["Thanks a million","Merci beaucoup"],
+["Cheers","Merci / À ta santé"],
+["See you soon","À bientôt"]
+],
+
+"Ireland has produced many internationally famous writers, musicians and artists.",
+
+[
+"What is the capital of Ireland?",
+["Dublin","Cork","Galway","Limerick"],0
+]
+)
+
+];
+
+
+/* =====================================================
+   RENDER COUNTRY EXPLORER
+===================================================== */
+
+function renderCountries(){
+
+    const africaBox =
+    document.getElementById("africanCountries");
+
+    const westernBox =
+    document.getElementById("westernCountries");
+
+    if(africaBox){
+        renderCountryGroup(africaBox, africanCountries);
+    }
+
+    if(westernBox){
+        renderCountryGroup(westernBox, westernCountries);
+    }
+}
+
+
+function renderCountryGroup(container, countries){
+
+    container.innerHTML = "";
+
+    const menu = document.createElement("div");
+    menu.className = "country-menu";
+
+    const profiles = document.createElement("div");
+
+    countries.forEach((country, index) => {
+
+        const button = document.createElement("button");
+
+        button.className = "country-button";
+        button.innerHTML =
+        country.flag + " " + country.name;
+
+        button.onclick = function(){
+
+            document
+            .querySelectorAll(".country-button")
+            .forEach(b => b.classList.remove("active"));
+
+            button.classList.add("active");
+
+            document
+            .querySelectorAll(".country-profile")
+            .forEach(p => p.classList.remove("active"));
+
+            const profile =
+            document.getElementById(
+            "country-profile-" + country.name.replace(/\W/g,"")
+            );
+
+            if(profile){
+                profile.classList.add("active");
+            }
+
+        };
+
+        menu.appendChild(button);
+
+
+        const profile = document.createElement("div");
+
+        profile.className = "country-profile";
+
+        profile.id =
+        "country-profile-" +
+        country.name.replace(/\W/g,"");
+
+        profile.innerHTML = `
+
+        <div class="country-title">
+
+            <div class="big-flag">
+                ${country.flag}
+            </div>
+
+            <div>
+                <h3>${country.name}</h3>
+
+                <div class="country-subtitle">
+                    ${country.region}
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="country-facts">
+
+            <div class="country-fact">
+                <strong>🏛️ Capital</strong><br>
+                ${country.capital}
+            </div>
+
+            <div class="country-fact">
+                <strong>🗣️ Languages</strong><br>
+                ${country.languages}
+            </div>
+
+            <div class="country-fact">
+                <strong>📅 Independence</strong><br>
+                ${country.independence}
+            </div>
+
+            <div class="country-fact">
+                <strong>🌍 Region</strong><br>
+                ${country.region}
+            </div>
+
+        </div>
+
+
+        <div class="country-section">
+            <h4>📜 History</h4>
+            <p>${country.history}</p>
+        </div>
+
+
+        <div class="country-section">
+            <h4>🧑🏾 Identity & People</h4>
+            <p>${country.identity}</p>
+        </div>
+
+
+        <div class="country-section">
+            <h4>🎭 Culture & Traditions</h4>
+            <p>${country.culture}</p>
+        </div>
+
+
+        <div class="country-section">
+            <h4>🙏🏾 Beliefs & Religion</h4>
+            <p>${country.beliefs}</p>
+        </div>
+
+
+        <div class="country-section">
+            <h4>🍛 Food</h4>
+            <p>${country.food}</p>
+        </div>
+
+
+        <div class="country-section">
+            <h4>🎵 Music</h4>
+            <p>${country.music}</p>
+        </div>
+
+
+        <div class="country-section">
+            <h4>🇬🇧 English</h4>
+            <p>${country.english}</p>
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>📖 English ↔ French</h4>
+
+            <div class="country-words">
+
+                ${country.translation.map(
+                    word => `
+                    <div class="country-word">
+                        <strong>${word[0]}</strong><br>
+                        ${word[1]}
+                    </div>
+                    `
+                ).join("")}
+
+            </div>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>💡 Did you know?</h4>
+
+            <p>${country.fact}</p>
+
+        </div>
+
+
+        <div class="country-quiz">
+
+            <h4>🧠 Country Quiz</h4>
+
+            <p>
+                ${country.quiz[0]}
+            </p>
+
+            ${country.quiz[1].map(
+                (answer, i) => `
+                <button
+                onclick="countryQuiz(
+                this,
+                ${i},
+                ${country.quiz[2]}
+                )">
+                ${answer}
+                </button>
+                `
+            ).join("")}
+
+            <div class="country-result"></div>
+
+        </div>
+
+        `;
+
+        profiles.appendChild(profile);
+
+    });
+
+
+    container.appendChild(menu);
+    container.appendChild(profiles);
+}
+
+
+function countryQuiz(button, selected, correct){
+
+    const quiz =
+    button.parentElement;
+
+    const result =
+    quiz.querySelector(".country-result");
+
+    if(selected === correct){
+
+        result.innerText =
+        "✅ Correct! Excellent work!";
+
+    }else{
+
+        result.innerText =
+        "❌ Not quite. Try again!";
+
+    }
+
+}
+
+
+/* START COUNTRY EXPLORER */
+
+window.addEventListener("load", function(){
+
+    renderCountries();
+
+});
+  /* =====================================================
+   COUNTRY DISPLAY ENGINE
+===================================================== */
+
+function renderCountries(){
+
+    renderCountryGroup(
+        africanCountries,
+        "africanCountries"
+    );
+
+    renderCountryGroup(
+        westernCountries,
+        "westernCountries"
+    );
+
+}
+
+
+function renderCountryGroup(countries, containerId){
+
+    const container =
+    document.getElementById(containerId);
+
+    if(!container) return;
+
+
+    let menu = document.createElement("div");
+
+    menu.className = "country-menu";
+
+
+    countries.forEach(function(country,index){
+
+        let button =
+        document.createElement("button");
+
+        button.className = "country-button";
+
+        button.innerHTML =
+        country.flag +
+        " " +
+        country.name;
+
+        button.onclick = function(){
+
+            document
+            .querySelectorAll(
+                "#" + containerId +
+                " .country-button"
+            )
+            .forEach(function(btn){
+                btn.classList.remove("active");
+            });
+
+
+            document
+            .querySelectorAll(
+                "#" + containerId +
+                " .country-profile"
+            )
+            .forEach(function(profile){
+                profile.classList.remove("active");
+            });
+
+
+            button.classList.add("active");
+
+
+            document
+            .getElementById(
+                containerId + "-profile-" + index
+            )
+            .classList.add("active");
+
+        };
+
+
+        menu.appendChild(button);
+
+    });
+
+
+    container.appendChild(menu);
+
+
+    countries.forEach(function(country,index){
+
+        let profile =
+        document.createElement("div");
+
+        profile.className =
+        "country-profile";
+
+        profile.id =
+        containerId +
+        "-profile-" +
+        index;
+
+
+        profile.innerHTML = `
+
+        <div class="country-title">
+
+            <div class="big-flag">
+                ${country.flag}
+            </div>
+
+            <div>
+
+                <h3>${country.name}</h3>
+
+                <div class="country-subtitle">
+                    ${country.region}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="country-facts">
+
+            <div class="country-fact">
+                <strong>🏛️ Capital</strong>
+                <br>
+                ${country.capital}
+            </div>
+
+
+            <div class="country-fact">
+                <strong>🗣️ Languages</strong>
+                <br>
+                ${country.languages}
+            </div>
+
+
+            <div class="country-fact">
+                <strong>🕊️ Independence / Political milestone</strong>
+                <br>
+                ${country.independence}
+            </div>
+
+
+            <div class="country-fact">
+                <strong>🌍 Region</strong>
+                <br>
+                ${country.region}
+            </div>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>🏛️ History</h4>
+
+            <p>
+                ${country.history}
+            </p>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>👥 People & Identity</h4>
+
+            <p>
+                ${country.identity}
+            </p>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>🎭 Culture</h4>
+
+            <p>
+                ${country.culture}
+            </p>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>🙏 Beliefs & Religion</h4>
+
+            <p>
+                ${country.beliefs}
+            </p>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>🍲 Food</h4>
+
+            <p>
+                ${country.food}
+            </p>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>🎵 Music</h4>
+
+            <p>
+                ${country.music}
+            </p>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>🇬🇧 English in ${country.name}</h4>
+
+            <p>
+                ${country.english}
+            </p>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>🇫🇷 Useful English & Translation</h4>
+
+            <div class="country-words">
+
+                ${country.translation.map(function(item){
+
+                    return `
+
+                    <div class="country-word">
+
+                        <strong>
+                            ${item[0]}
+                        </strong>
+
+                        <br>
+
+                        🇫🇷 ${item[1]}
+
+                        <br><br>
+
+                        <button
+                        class="sound-btn"
+                        onclick="speakText('${item[0].replace(/'/g,"\\'")}')">
+
+                        🔊
+
+                        </button>
+
+                    </div>
+
+                    `;
+
+                }).join("")}
+
+            </div>
+
+        </div>
+
+
+        <div class="country-section">
+
+            <h4>💡 Interesting Fact</h4>
+
+            <p>
+                ${country.fact}
+            </p>
+
+        </div>
+
+
+        <div class="country-quiz">
+
+            <h4>🧠 Country Quiz</h4>
+
+            <p>
+                <strong>
+                    ${country.quiz[0]}
+                </strong>
+            </p>
+
+            <div id="${containerId}-quiz-${index}">
+
+                ${country.quiz[1].map(function(option,i){
+
+                    return `
+
+                    <button
+                    onclick="countryQuiz(
+                        this,
+                        ${i === country.quiz[2]},
+                        '${containerId}-quiz-result-${index}'
+                    )">
+
+                    ${option}
+
+                    </button>
+
+                    `;
+
+                }).join("")}
+
+            </div>
+
+            <div
+            class="country-result"
+            id="${containerId}-quiz-result-${index}">
+            </div>
+
+        </div>
+
+        `;
+
+
+        container.appendChild(profile);
+
+    });
+
+
+    /* Open first country automatically */
+
+    if(countries.length > 0){
+
+        const firstButton =
+        menu.querySelector(".country-button");
+
+        const firstProfile =
+        container.querySelector(".country-profile");
+
+        firstButton.classList.add("active");
+
+        firstProfile.classList.add("active");
+
+    }
+
+}
+
+
+/* =====================================================
+   COUNTRY QUIZ
+===================================================== */
+
+function countryQuiz(button,correct,resultId){
+
+    const result =
+    document.getElementById(resultId);
+
+
+    if(correct){
+
+        button.style.background =
+        "#dff5e5";
+
+        result.innerHTML =
+        "✅ Correct! Excellent work.";
+
+        updateProgress(50);
+
+    }else{
+
+        button.style.background =
+        "#ffe1e1";
+
+        result.innerHTML =
+        "❌ Not quite. Try another answer.";
+
+    }
+
+}
+
+
+/* =====================================================
+   START COUNTRY SYSTEM
+===================================================== */
+
+window.addEventListener("load",function(){
+
+    renderCountries();
+
+});
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function openLesson(id){
+
+    document.querySelectorAll(".lesson")
+    .forEach(function(section){
+
+        section.classList.remove("active");
+
+    });
+
+
+    let target =
+    document.getElementById(id);
+
+
+    if(target){
+
+        target.classList.add("active");
+
+
+        target.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+
+        updateProgress(10);
+
+    }
+
+}
+
+
+function goHome(){
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================================
+   START LEARNING
+===================================================== */
+
+function startLearning(){
+
+    openLesson("listening");
+
+    speakText(
+    "Welcome to English with Alex. Let us start learning English together."
+    );
+
+    updateProgress(10);
+
+}
+
+
+/* =====================================================
+   LEVEL SELECTOR
+===================================================== */
+
+function selectLevel(level){
+
+    let content =
+    document.getElementById("levelContent");
+
+
+    if(level === "Beginner"){
+
+        content.innerHTML =
+
+        "<h3>🌱 Beginner</h3>" +
+
+        "<p>" +
+        "Focus on basic vocabulary, simple grammar, " +
+        "pronunciation, everyday expressions and simple conversations." +
+        "</p>";
+
+        updateProgress(10);
+
+    }
+
+
+    if(level === "Intermediate"){
+
+        content.innerHTML =
+
+        "<h3>📈 Intermediate</h3>" +
+
+        "<p>" +
+        "Work on longer conversations, past and future forms, " +
+        "idioms, listening comprehension and fluency." +
+        "</p>";
+
+        updateProgress(20);
+
+    }
+
+
+    if(level === "Advanced"){
+
+        content.innerHTML =
+
+        "<h3>⭐ Advanced</h3>" +
+
+        "<p>" +
+        "Develop advanced vocabulary, debate skills, professional English, " +
+        "diplomatic English and natural speaking." +
+        "</p>";
+
+        updateProgress(30);
+
+    }
+
+
+    content.scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+function quizAnswer(button,correct){
+
+    let result =
+    document.getElementById("quizResult");
+
+
+    if(correct){
+
+        result.innerHTML =
+        "✅ Correct! Excellent work.";
+
+        button.style.background =
+        "#dff5e5";
+
+        updateProgress(40);
+
+    }else{
+
+        result.innerHTML =
+        "❌ Not quite. Try again.";
+
+        button.style.background =
+        "#ffe1e1";
+
+    }
+
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+function updateProgress(value){
+
+    let current =
+    parseInt(
+        localStorage.getItem("englishAlexProgress") || "0"
+    );
+
+
+    if(value > current){
+
+        current = value;
+
+    }
+
+
+    if(current > 100){
+
+        current = 100;
+
+    }
+
+
+    localStorage.setItem(
+        "englishAlexProgress",
+        current
+    );
+
+
+    document.getElementById("progressBar")
+    .style.width = current + "%";
+
+
+    document.getElementById("progressText")
+    .innerText =
+    current + "% completed";
+
+}
+
+
+/* =====================================================
+   LOAD SAVED PROGRESS
+===================================================== */
+
+window.addEventListener("load",function(){
+
+    let saved =
+    parseInt(
+        localStorage.getItem("englishAlexProgress") || "0"
+    );
+
+
+    document.getElementById("progressBar")
+    .style.width =
+    saved + "%";
+
+
+    document.getElementById("progressText")
+    .innerText =
+    saved + "% completed";
+
+
+    loadVoices();
+
+});
+
+</script>
+
+</body>
+</html>
