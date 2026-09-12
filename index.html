@@ -1415,19 +1415,803 @@ function axProLessons(lv){
  h+='</div><button class="axpro-btn alt" onclick="axProLevels()">← Niveaux</button>';axProOpen('🎓 '+lv,h);
 }
 function axProLesson(lv,i){
- const x=(AXPRO_LEVELS[lv]||[])[i];if(!x)return;
- const examples=x[3].split(' / ');let h=`<div class="axpro-lesson"><div class="axpro-pills"><span class="axpro-pill">${axEsc(lv)}</span><span class="axpro-pill">Leçon ${i+1}/5</span></div><h3>${axEsc(x[0])}</h3><p><b>Objectif :</b> ${axEsc(x[1])}.</p><h4>📖 Explication approfondie</h4><p>${axEsc(x[2])} Dans une situation réelle, le meilleur apprentissage vient de la combinaison entre compréhension, observation et production. Commence par identifier la structure, puis demande-toi pourquoi le locuteur l’a choisie. Ensuite, transforme le modèle avec tes propres mots. Cette étape évite la mémorisation mécanique et permet de réutiliser la règle dans une nouvelle situation.</p><p>Pour progresser, travaille en trois temps : <b>observer</b> un modèle, <b>manipuler</b> la structure avec plusieurs variantes, puis <b>produire</b> une phrase personnelle. Quand une erreur apparaît, ne te contente pas de corriger la réponse : cherche la cause de l’erreur — temps verbal, ordre des mots, accord, préposition, vocabulaire ou registre. Cette méthode développe une compétence durable, utile aussi bien pour les contrôles scolaires que pour les études universitaires.</p><h4>🧩 Exemples</h4>`;
- examples.forEach(e=>h+=`<div class="axpro-example">${axEsc(e)}<br><button class="axpro-btn alt" onclick="speakText(${JSON.stringify(e)})">🔊 Écouter</button></div>`);
- h+=`<h4>🧠 Méthode de travail</h4><ol><li>Lis la règle deux fois.</li><li>Lis les exemples à voix haute.</li><li>Transforme au moins trois phrases.</li><li>Explique la règle en français puis en anglais simple.</li><li>Fais les exercices sans regarder la correction.</li></ol><h4>✍️ Exercices d’application</h4>`;
- const qs=[
-  ['Which statement best matches the lesson?',[x[1],'A completely unrelated skill','Only pronunciation','Only translation'],0],
-  ['Choose the most useful study action.',['Observe → manipulate → produce','Memorise one sentence only','Avoid speaking','Translate every word mechanically'],0],
-  ['What should you do after making an error?',['Identify the cause of the error','Erase it and forget it','Stop practising','Change the whole subject'],0],
-  ['Which habit improves long-term learning?',['Reusing the structure in personal examples','Studying only once','Reading without producing','Avoiding questions'],0],
-  ['Final challenge: explain the lesson in your own words.',['I can explain and give an example','I have no idea','I will not try','I will copy a sentence'],0]
- ];
- qs.forEach((q,n)=>{h+=`<div class="axpro-ex"><b>${n+1}. ${axEsc(q[0])}</b><div>`;q[1].forEach((o,j)=>h+=`<button onclick="axProAnswer(this,${j===q[2]})">${axEsc(o)}</button>`);h+=`</div><div class="axpro-result"></div></div>`;});
- h+=`<button class="axpro-btn alt" onclick="axProLessons('${axEsc(lv)}')">← Retour aux leçons</button></div>`;axProOpen('📖 '+lv+' — '+x[0],h);
+
+    const x = (AXPRO_LEVELS[lv] || [])[i];
+    if(!x) return;
+
+    const title = x[0];
+    const objective = x[1];
+    const explanation = x[2];
+    const examples = x[3].split(" / ");
+
+    /* =====================================================
+       BASE PÉDAGOGIQUE
+       ===================================================== */
+
+    const course = {
+
+        title:title,
+        level:lv,
+        objective:objective,
+        explanation:explanation,
+
+        structure:[],
+        rules:[],
+        examples:[],
+        mistakes:[],
+        vocabulary:[],
+        practice:[],
+        exercises:[],
+        answers:[],
+        summary:[],
+        speaking:""
+
+    };
+
+
+    /* =====================================================
+       CONTENU SPÉCIFIQUE — TENSES
+       ===================================================== */
+
+    if(/present simple/i.test(title)){
+
+        course.structure = [
+            "Affirmative: Subject + base verb",
+            "He / She / It: Subject + verb + s/es",
+            "Negative: Subject + do/does not + base verb",
+            "Question: Do/Does + subject + base verb?"
+        ];
+
+        course.rules = [
+            "Habits and routines",
+            "General facts",
+            "Permanent or stable situations",
+            "Timetables and schedules"
+        ];
+
+        course.examples = [
+            "I study English every day.",
+            "She studies English at university.",
+            "They do not live here.",
+            "Does he speak English?"
+        ];
+
+        course.mistakes = [
+            "She study English. → She studies English.",
+            "Does he studies? → Does he study?",
+            "He don't work. → He doesn't work."
+        ];
+
+        course.vocabulary = [
+            "always = toujours",
+            "usually = habituellement",
+            "often = souvent",
+            "sometimes = parfois",
+            "rarely = rarement",
+            "never = jamais"
+        ];
+
+        course.practice = [
+            "Describe your daily routine.",
+            "Describe your studies.",
+            "Describe what you usually do at the weekend."
+        ];
+
+        course.exercises = [
+            "She ___ English every day. (study)",
+            "They ___ football on Sundays. (play)",
+            "___ he work here? (Do/Does)",
+            "I ___ not like coffee. (do/does)"
+        ];
+
+        course.answers = [
+            "studies",
+            "play",
+            "Does",
+            "do"
+        ];
+
+        course.speaking =
+            "Describe your daily routine in English for one minute.";
+
+        course.summary = [
+            "Use the present simple for habits and facts.",
+            "Use -s or -es with he, she and it.",
+            "Use do/does for questions.",
+            "Use don't/doesn't for negatives."
+        ];
+    }
+
+
+    else if(/present continuous/i.test(title)){
+
+        course.structure = [
+            "Affirmative: Subject + am/is/are + verb-ing",
+            "Negative: Subject + am/is/are + not + verb-ing",
+            "Question: Am/Is/Are + subject + verb-ing?"
+        ];
+
+        course.rules = [
+            "Actions happening now",
+            "Temporary situations",
+            "Actions around the present moment"
+        ];
+
+        course.examples = [
+            "I am studying English now.",
+            "She is reading a book.",
+            "They are playing football.",
+            "Are you listening?"
+        ];
+
+        course.mistakes = [
+            "I am study. → I am studying.",
+            "She studying. → She is studying.",
+            "They is working. → They are working."
+        ];
+
+        course.vocabulary = [
+            "now = maintenant",
+            "right now = en ce moment",
+            "currently = actuellement",
+            "at the moment = actuellement"
+        ];
+
+        course.practice = [
+            "Describe what you are doing now.",
+            "Describe what people around you are doing.",
+            "Describe a temporary situation in your life."
+        ];
+
+        course.exercises = [
+            "I ___ studying now. (am/is)",
+            "She ___ reading. (is/are)",
+            "They ___ playing. (is/are)",
+            "___ you listening? (Are/Is)"
+        ];
+
+        course.answers = [
+            "am",
+            "is",
+            "are",
+            "Are"
+        ];
+
+        course.speaking =
+            "Describe what you and the people around you are doing now.";
+
+        course.summary = [
+            "Use be + verb-ing.",
+            "Use am with I.",
+            "Use is with he, she and it.",
+            "Use are with you, we and they."
+        ];
+    }
+
+
+    /* =====================================================
+       PAST SIMPLE
+       ===================================================== */
+
+    else if(/past simple/i.test(title)){
+
+        course.structure = [
+            "Affirmative: Subject + past form",
+            "Regular verbs: verb + ed",
+            "Negative: Subject + did not + base verb",
+            "Question: Did + subject + base verb?"
+        ];
+
+        course.rules = [
+            "Finished actions",
+            "Past events",
+            "Actions connected to a finished time"
+        ];
+
+        course.examples = [
+            "I visited my mother yesterday.",
+            "She studied English last night.",
+            "They went to Bouaké.",
+            "Did you see him?"
+        ];
+
+        course.mistakes = [
+            "I did not went. → I did not go.",
+            "Did you went? → Did you go?",
+            "I goed there. → I went there."
+        ];
+
+        course.vocabulary = [
+            "yesterday = hier",
+            "last week = la semaine dernière",
+            "last year = l'année dernière",
+            "ago = il y a"
+        ];
+
+        course.practice = [
+            "Describe what you did yesterday.",
+            "Describe your last holiday.",
+            "Tell a short story about something that happened."
+        ];
+
+        course.exercises = [
+            "I ___ my friend yesterday. (visit)",
+            "She ___ to school. (go)",
+            "Did you ___ him? (see)",
+            "They did not ___ football. (play)"
+        ];
+
+        course.answers = [
+            "visited",
+            "went",
+            "see",
+            "play"
+        ];
+
+        course.speaking =
+            "Tell a one-minute story about something you did yesterday.";
+
+        course.summary = [
+            "Use the past simple for completed past events.",
+            "Regular verbs usually take -ed.",
+            "Irregular verbs have special forms.",
+            "After did, use the base verb."
+        ];
+    }
+
+
+    /* =====================================================
+       MODALS
+       ===================================================== */
+
+    else if(/modals/i.test(title)){
+
+        course.structure = [
+            "Modal + base verb",
+            "can → ability / permission",
+            "must → strong obligation",
+            "should → advice",
+            "might / may → possibility"
+        ];
+
+        course.rules = [
+            "A modal is followed by the base form.",
+            "Do not add -s after a modal.",
+            "Do not normally use 'to' after can, must or should."
+        ];
+
+        course.examples = [
+            "I can speak English.",
+            "You must study.",
+            "You should practise every day.",
+            "She might come tomorrow."
+        ];
+
+        course.mistakes = [
+            "He can speaks. → He can speak.",
+            "You must to study. → You must study.",
+            "She should studies. → She should study."
+        ];
+
+        course.vocabulary = [
+            "ability = capacité",
+            "permission = permission",
+            "obligation = obligation",
+            "advice = conseil",
+            "possibility = possibilité"
+        ];
+
+        course.practice = [
+            "Give five pieces of advice to an English learner.",
+            "Describe three things you can do.",
+            "Describe three things students must do."
+        ];
+
+        course.exercises = [
+            "You ___ study regularly. (should)",
+            "She ___ speak English. (can)",
+            "Students ___ respect the rules. (must)",
+            "He ___ arrive later. (might)"
+        ];
+
+        course.answers = [
+            "should",
+            "can",
+            "must",
+            "might"
+        ];
+
+        course.speaking =
+            "Give advice to someone who wants to become fluent in English.";
+
+        course.summary = [
+            "Modal + base verb.",
+            "Can expresses ability or permission.",
+            "Must expresses strong obligation.",
+            "Should expresses advice.",
+            "May and might express possibility."
+        ];
+    }
+
+
+    /* =====================================================
+       CONDITIONNELS
+       ===================================================== */
+
+    else if(/conditional/i.test(title)){
+
+        course.structure = [
+            "Zero: If + present, present",
+            "First: If + present, will + verb",
+            "Second: If + past, would + verb",
+            "Third: If + past perfect, would have + past participle"
+        ];
+
+        course.rules = [
+            "Zero conditional → general truths",
+            "First conditional → real/possible future",
+            "Second conditional → unreal or unlikely present/future",
+            "Third conditional → unreal past"
+        ];
+
+        course.examples = [
+            "If you heat water, it boils.",
+            "If I study, I will improve.",
+            "If I had money, I would travel.",
+            "If I had studied, I would have passed."
+        ];
+
+        course.mistakes = [
+            "If I will study... → If I study...",
+            "If I would have money... → If I had money...",
+            "If I had studied, I would have passed. ✓"
+        ];
+
+        course.vocabulary = [
+            "condition = condition",
+            "result = résultat",
+            "possibility = possibilité",
+            "regret = regret",
+            "hypothesis = hypothèse"
+        ];
+
+        course.practice = [
+            "Write one example of each conditional.",
+            "Explain the difference between first and second conditional.",
+            "Describe one past situation you would change."
+        ];
+
+        course.exercises = [
+            "If you study, you ___ improve. (will)",
+            "If I had money, I ___ travel. (would)",
+            "If water reaches 100°C, it ___. (boil)",
+            "If I had known, I ___ have helped. (would)"
+        ];
+
+        course.answers = [
+            "will",
+            "would",
+            "boils",
+            "would"
+        ];
+
+        course.speaking =
+            "Explain what you would do if you had enough money to achieve one important goal.";
+
+        course.summary = [
+            "Learn the logic before memorising the names.",
+            "First conditional concerns possible situations.",
+            "Second conditional concerns unreal or unlikely situations.",
+            "Third conditional concerns unreal past situations."
+        ];
+    }
+
+
+    /* =====================================================
+       TRANSLATION
+       ===================================================== */
+
+    else if(/translation/i.test(title)){
+
+        course.structure = [
+            "Understand the source text.",
+            "Identify context.",
+            "Identify register.",
+            "Choose meaning rather than individual words.",
+            "Produce natural target language.",
+            "Revise the translation."
+        ];
+
+        course.rules = [
+            "Do not translate mechanically.",
+            "Check false friends.",
+            "Respect register.",
+            "Respect cultural references.",
+            "Check grammar after translation."
+        ];
+
+        course.examples = [
+            "Understand meaning before choosing vocabulary.",
+            "A literal translation can be grammatically correct but unnatural.",
+            "Idioms often require functional equivalents."
+        ];
+
+        course.mistakes = [
+            "Word-for-word translation.",
+            "Ignoring context.",
+            "Using a false friend.",
+            "Ignoring register."
+        ];
+
+        course.vocabulary = [
+            "source text = texte source",
+            "target text = texte cible",
+            "equivalence = équivalence",
+            "register = registre",
+            "context = contexte",
+            "false friend = faux ami"
+        ];
+
+        course.practice = [
+            "Translate five sentences and explain difficult choices.",
+            "Find one idiom and give its natural equivalent.",
+            "Compare a literal translation with a natural translation."
+        ];
+
+        course.speaking =
+            "Explain why a good translation is not always a word-for-word translation.";
+
+        course.summary = [
+            "Meaning comes before individual words.",
+            "Context determines translation choices.",
+            "Register matters.",
+            "Always revise the final text."
+        ];
+    }
+
+
+    /* =====================================================
+       RESEARCH / THESIS
+       ===================================================== */
+
+    else if(
+        /research/i.test(title) ||
+        /methodology/i.test(title) ||
+        /thesis/i.test(title)
+    ){
+
+        course.structure = [
+            "Research problem",
+            "Research question",
+            "Literature review",
+            "Methodology",
+            "Data collection",
+            "Analysis",
+            "Discussion",
+            "Conclusion"
+        ];
+
+        course.rules = [
+            "A research question must be focused.",
+            "The method must match the research question.",
+            "Sources must be evaluated critically.",
+            "Results must be distinguished from interpretation.",
+            "Limitations must be acknowledged."
+        ];
+
+        course.examples = [
+            "Problem → Question → Method → Data → Analysis → Conclusion.",
+            "A broad topic is not automatically a research question.",
+            "A literature review synthesizes sources rather than simply listing them."
+        ];
+
+        course.mistakes = [
+            "Choosing a question that is too broad.",
+            "Collecting information without a research purpose.",
+            "Listing sources without comparing them.",
+            "Making conclusions unsupported by evidence."
+        ];
+
+        course.vocabulary = [
+            "research question = question de recherche",
+            "literature review = revue de littérature",
+            "methodology = méthodologie",
+            "data = données",
+            "evidence = preuve / élément probant",
+            "findings = résultats",
+            "limitation = limite"
+        ];
+
+        course.practice = [
+            "Create a research question about English learning.",
+            "Suggest an appropriate methodology.",
+            "Identify possible limitations."
+        ];
+
+        course.speaking =
+            "Present a research question and explain how you would investigate it.";
+
+        course.summary = [
+            "Research begins with a clear problem.",
+            "The question determines the method.",
+            "Evidence must be analysed.",
+            "A conclusion must answer the research question."
+        ];
+    }
+
+
+    /* =====================================================
+       DEFAULT — LESSONS NON SPÉCIALISÉES
+       ===================================================== */
+
+    else{
+
+        course.structure = [
+            "Definition",
+            "Main characteristics",
+            "Examples",
+            "Application",
+            "Revision"
+        ];
+
+        course.rules = [
+            "Understand the concept before memorising it.",
+            "Compare several examples.",
+            "Practise the concept actively.",
+            "Use it in a personal context."
+        ];
+
+        course.examples = examples;
+
+        course.mistakes = [
+            "Memorising without understanding.",
+            "Learning only one example.",
+            "Never practising independently."
+        ];
+
+        course.practice = [
+            "Explain the concept in your own words.",
+            "Create three personal examples.",
+            "Use the concept in a short spoken presentation."
+        ];
+
+        course.speaking =
+            "Explain today's lesson in English for one minute.";
+
+        course.summary = [
+            objective,
+            "Understand the rule.",
+            "Practise with examples.",
+            "Use the knowledge independently."
+        ];
+    }
+
+
+    /* =====================================================
+       AFFICHAGE
+       ===================================================== */
+
+    let h = `
+    <div class="axpro-lesson">
+
+        <div class="axpro-pills">
+            <span class="axpro-pill">${axEsc(lv)}</span>
+            <span class="axpro-pill">Leçon ${i+1}/5</span>
+        </div>
+
+        <h3>📖 ${axEsc(course.title)}</h3>
+
+        <div class="axpro-section">
+            <h4>🎯 Objectif</h4>
+            <p>${axEsc(course.objective)}.</p>
+        </div>
+
+        <div class="axpro-section">
+            <h4>📚 Cours</h4>
+            <p>${axEsc(course.explanation)}</p>
+        </div>
+
+        <div class="axpro-section">
+            <h4>🧩 Structure</h4>
+            <div class="axpro-example">
+                ${course.structure.map(s=>`• ${axEsc(s)}<br>`).join("")}
+            </div>
+        </div>
+
+        <div class="axpro-section">
+            <h4>📌 Règles essentielles</h4>
+            <ul>
+                ${course.rules.map(r=>`<li>${axEsc(r)}</li>`).join("")}
+            </ul>
+        </div>
+
+        <div class="axpro-section">
+            <h4>💡 Exemples</h4>
+    `;
+
+    course.examples.forEach((e,n)=>{
+
+        h += `
+        <div class="axpro-example">
+
+            <b>Example ${n+1}</b><br>
+            ${axEsc(e)}
+
+            <br><br>
+
+            <button
+                class="axpro-btn alt"
+                onclick='speakText(${JSON.stringify(e)})'>
+                🔊 Écouter
+            </button>
+
+        </div>
+        `;
+
+    });
+
+
+    h += `
+        </div>
+
+        <div class="axpro-section">
+            <h4>⚠️ Erreurs fréquentes</h4>
+            <ul>
+                ${course.mistakes.map(m=>`<li>${axEsc(m)}</li>`).join("")}
+            </ul>
+        </div>
+
+        <div class="axpro-section">
+            <h4>🗣️ Pratique</h4>
+            <ul>
+                ${course.practice.map(p=>`<li>${axEsc(p)}</li>`).join("")}
+            </ul>
+        </div>
+
+        <div class="axpro-section">
+            <h4>🧠 Vocabulaire clé</h4>
+            <ul>
+                ${
+                    course.vocabulary.length
+                    ? course.vocabulary.map(v=>`<li>${axEsc(v)}</li>`).join("")
+                    : "<li>Vocabulaire à extraire du cours et à réutiliser.</li>"
+                }
+            </ul>
+        </div>
+
+        <div class="axpro-section">
+
+            <h4>✍️ Exercices</h4>
+    `;
+
+
+    if(course.exercises.length){
+
+        course.exercises.forEach((q,n)=>{
+
+            h += `
+            <div class="axpro-ex">
+
+                <b>${n+1}. ${axEsc(q)}</b>
+
+                <br><br>
+
+                <button onclick="this.nextElementSibling.style.display='block'">
+                    👁️ Voir la correction
+                </button>
+
+                <div
+                    class="axpro-result"
+                    style="display:none">
+
+                    <b>Correction :</b>
+                    ${axEsc(course.answers[n] || "À vérifier dans le cours.")}
+
+                </div>
+
+            </div>
+            `;
+
+        });
+
+    }else{
+
+        h += `
+        <div class="axpro-note">
+            Crée trois phrases personnelles utilisant
+            directement la notion étudiée.
+        </div>
+        `;
+
+    }
+
+
+    h += `
+
+        </div>
+
+        <div class="axpro-section">
+
+            <h4>🔊 Expression orale</h4>
+
+            <div class="axpro-note">
+                ${axEsc(course.speaking)}
+            </div>
+
+            <br>
+
+            <button
+                class="axpro-btn"
+                onclick='speakText(${JSON.stringify(course.speaking)})'>
+
+                ▶️ Écouter la consigne
+
+            </button>
+
+        </div>
+
+        <div class="axpro-section">
+
+            <h4>📌 À retenir</h4>
+
+            <ul>
+                ${course.summary.map(s=>`<li>${axEsc(s)}</li>`).join("")}
+            </ul>
+
+        </div>
+
+        <div class="axpro-section">
+
+            <h4>🏆 Défi final</h4>
+
+            <div class="axpro-note">
+
+                Explique cette leçon en anglais pendant
+                <b>60 secondes</b> sans lire tes notes.
+
+                <br><br>
+
+                Donne ensuite au moins
+                <b>3 exemples personnels</b>.
+
+            </div>
+
+        </div>
+
+        <div class="axpro-section">
+
+            <h4>🔊 Révision audio</h4>
+
+            <button
+                class="axpro-btn"
+                onclick='speakText(${JSON.stringify(
+                    course.title + ". " +
+                    course.objective + ". " +
+                    course.explanation
+                )})'>
+
+                ▶️ Lire le cours
+
+            </button>
+
+        </div>
+
+        <button
+            class="axpro-btn alt"
+            onclick="axProLessons('${axEsc(lv)}')">
+
+            ← Retour aux leçons
+
+        </button>
+
+    </div>
+    `;
+
+
+    axProOpen(
+        "📖 " + lv + " — " + title,
+        h
+    );
 }
 function axProAnswer(btn,ok){const box=btn.parentElement.parentElement;box.querySelectorAll('button').forEach(b=>b.disabled=true);const r=box.querySelector('.axpro-result');r.innerText=ok?'✅ Correct — continue !':'❌ Reprends la règle et réessaie dans ta prochaine séance.';r.style.color=ok?'green':'#c0392b';}
 function axProCountries(){
