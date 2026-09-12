@@ -1375,17 +1375,142 @@ else if(q.includes('translate')||q.includes('tradu')||q.includes('meaning')){a='
 else if(q.includes('essay')||q.includes('dissertation')){a='<b>Essay structure:</b> introduction avec problématique/thèse → paragraphes avec idée + preuve/exemple + analyse → conclusion qui répond clairement au sujet.';}
 else if(q.includes('study')||q.includes('learn')){a='<b>Study method:</b> 20–30 minutes de grammaire/vocabulaire, puis écoute, speaking et shadowing. Révise les mots après 1 jour, 1 semaine et 1 mois.';}
 document.getElementById('v4AIAnswer').innerHTML=a;};
-window.addEventListener('keydown',e=>{if(e.key==='Escape')v4Close();});
-})();
-</script>
+window.addEventListener('keydown', function(e){
 
-<style id="axProStyles">
-.axpro-launch{position:fixed;right:16px;bottom:78px;z-index:4900;border:0;border-radius:999px;padding:13px 17px;background:linear-gradient(135deg,#073b7c,#0a63c9);color:#fff;font-weight:800;box-shadow:0 12px 30px rgba(0,0,0,.25);font-size:14px}.axpro-overlay{position:fixed;inset:0;background:rgba(2,10,25,.78);backdrop-filter:blur(6px);z-index:6000;display:none;align-items:center;justify-content:center;padding:12px}.axpro-overlay.open{display:flex}.axpro-box{width:min(1200px,97vw);max-height:94vh;background:#f5f8fc;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 90px rgba(0,0,0,.4)}.axpro-head{background:linear-gradient(135deg,#061b3a,#073b7c);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}.axpro-head h2{margin:0;font-size:20px}.axpro-close{border:0;border-radius:50%;width:38px;height:38px;font-size:24px;font-weight:900;color:#073b7c;background:#fff}.axpro-body{overflow:auto;padding:18px}.axpro-home-grid,.axpro-level-grid,.axpro-lesson-grid,.axpro-country-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.axpro-card{background:#fff;border:1px solid #dfe8f3;border-radius:18px;padding:17px;box-shadow:0 5px 18px rgba(0,0,0,.05)}.axpro-card h3,.axpro-card h4{margin:0 0 8px;color:#073b7c}.axpro-card p{line-height:1.65;color:#465468}.axpro-btn{border:0;border-radius:10px;padding:10px 13px;background:#073b7c;color:#fff;font-weight:700;margin-top:8px}.axpro-btn.alt{background:#eef4ff;color:#073b7c}.axpro-pills{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.axpro-pill{padding:7px 10px;border-radius:999px;background:#eaf2ff;color:#073b7c;font-weight:700}.axpro-lesson{background:#fff;border-radius:18px;padding:22px;line-height:1.75}.axpro-lesson h3{color:#073b7c}.axpro-lesson h4{margin-top:22px;color:#0b4e91}.axpro-example{background:#f1f6fc;border-left:5px solid #073b7c;padding:12px 15px;border-radius:10px;margin:10px 0}.axpro-ex{background:#f8fafc;border:1px solid #dce5ef;border-radius:14px;padding:15px;margin:12px 0}.axpro-ex button{border:0;border-radius:9px;padding:8px 11px;margin:5px;background:#073b7c;color:#fff}.axpro-result{font-weight:800;margin-top:8px}.axpro-search{width:100%;padding:12px;border:1px solid #d5deeb;border-radius:12px;margin:10px 0 15px}.axpro-country{background:#fff;border-radius:18px;padding:20px;line-height:1.7}.axpro-country h3{color:#073b7c}.axpro-country section{margin-top:16px}.axpro-stat{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.axpro-stat div{background:#f1f6fc;padding:11px;border-radius:10px}.axpro-library-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.axpro-work{background:#fff;border:1px solid #e0e7f0;border-radius:14px;padding:14px}.axpro-work h4{margin:0 0 5px;color:#073b7c}.axpro-note{padding:13px 15px;background:#eaf4ff;border-left:5px solid #073b7c;border-radius:10px;margin-bottom:15px;line-height:1.6}
+    /* Fermer Academy Pro avec la touche Échap */
+    if(e.key === 'Escape'){
+        const overlay = document.getElementById('axProOverlay');
+
+        if(overlay && overlay.classList.contains('open')){
+            axProClose();
+        }
+    }
+
+});
 @media(max-width:800px){.axpro-home-grid,.axpro-level-grid,.axpro-lesson-grid,.axpro-country-grid,.axpro-library-list{grid-template-columns:1fr}.axpro-stat{grid-template-columns:repeat(2,1fr)}.axpro-launch{bottom:72px;right:10px}}
 </style>
 
 <button class="axpro-launch" onclick="axProOpenHome()">🎓 Academy Pro</button>
-<div class="axpro-overlay" id="axProOverlay" onclick="if(event.target===this)axProClose()">
+.axpro-overlay{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.75);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+    padding:15px;
+    box-sizing:border-box;
+}
+
+.axpro-overlay.open{
+    display:flex;
+}
+
+.axpro-box{
+    width:min(1100px,100%);
+    max-height:92vh;
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+    display:flex;
+    flex-direction:column;
+}
+
+.axpro-head{
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 20px;
+    background:#111827;
+    color:#fff;
+}
+
+.axpro-head h2{
+    margin:0;
+    font-size:20px;
+}
+
+.axpro-close{
+    border:0;
+    background:transparent;
+    color:#fff;
+    font-size:30px;
+    cursor:pointer;
+}
+
+.axpro-body{
+    flex:1;
+    overflow-y:auto;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+.axpro-lesson{
+    width:100%;
+    max-width:950px;
+    margin:0 auto;
+}
+
+.axpro-section{
+    margin:20px 0;
+}
+
+.axpro-section h4{
+    margin-bottom:10px;
+}
+
+.axpro-example{
+    padding:15px;
+    margin:10px 0;
+    border-radius:12px;
+    background:#f3f4f6;
+    line-height:1.6;
+}
+
+.axpro-ex{
+    padding:15px;
+    margin:12px 0;
+    border:1px solid #ddd;
+    border-radius:12px;
+}
+
+.axpro-ex button{
+    margin:6px 5px 0 0;
+}
+
+.axpro-result{
+    margin-top:10px;
+    padding:10px;
+    border-radius:8px;
+}
+
+@media(max-width:600px){
+
+    .axpro-overlay{
+        padding:0;
+    }
+
+    .axpro-box{
+        width:100%;
+        height:100%;
+        max-height:100vh;
+        border-radius:0;
+    }
+
+    .axpro-body{
+        padding:15px;
+    }
+
+    .axpro-head h2{
+        font-size:17px;
+    }
+
+}
  <div class="axpro-box">
   <div class="axpro-head"><h2 id="axProTitle">English With Alex — Academy Pro</h2><button class="axpro-close" onclick="axProClose()">×</button></div>
   <div class="axpro-body" id="axProBody"></div>
