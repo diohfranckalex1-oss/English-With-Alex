@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://diohfranckalex1-oss.github.io/English-With-Alex/sitemap.xml
