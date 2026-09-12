@@ -1790,5 +1790,2251 @@ document.addEventListener('DOMContentLoaded', function() {
   alexUpdateDisplay();
 
 }); 
-</script></body>
+</script>
+ <!-- =========================================================
+     ENGLISH WITH ALEX — LESSON BOOSTER V1
+     Verb Tenses + Complete Lessons + Voice + Search
+     ========================================================= -->
+
+<style>
+.ea-lesson-zone{
+  margin:25px auto;
+  max-width:1100px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,255,255,.97);
+  color:#172033;
+  box-shadow:0 8px 30px rgba(0,0,0,.12);
+}
+
+.ea-lesson-zone h2{
+  margin-top:0;
+  font-size:28px;
+}
+
+.ea-search-box{
+  width:100%;
+  box-sizing:border-box;
+  padding:14px;
+  border:2px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+  margin:12px 0;
+}
+
+.ea-filter{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:12px 0;
+}
+
+.ea-filter button,
+.ea-voice-btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.ea-filter button:hover,
+.ea-voice-btn:hover{
+  transform:translateY(-1px);
+}
+
+.ea-tense-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:15px;
+  margin-top:18px;
+}
+
+.ea-tense-card{
+  border:1px solid #ddd;
+  border-radius:16px;
+  padding:18px;
+  background:#fff;
+  transition:.2s;
+}
+
+.ea-tense-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 22px rgba(0,0,0,.10);
+}
+
+.ea-tense-card h3{
+  margin-top:0;
+}
+
+.ea-tag{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#eef2ff;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.ea-section{
+  margin-top:12px;
+}
+
+.ea-section strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.ea-example{
+  padding:10px;
+  border-left:4px solid #555;
+  background:#f6f6f6;
+  border-radius:7px;
+  margin:6px 0;
+}
+
+.ea-voice-panel{
+  margin-top:18px;
+  padding:15px;
+  border-radius:14px;
+  background:#f2f5f8;
+}
+
+.ea-result-count{
+  margin:8px 0;
+  font-weight:bold;
+}
+
+.ea-no-result{
+  padding:18px;
+  border-radius:12px;
+  background:#fff3f3;
+  color:#9b2226;
+}
+
+@media(max-width:600px){
+  .ea-lesson-zone{
+    padding:14px;
+  }
+
+  .ea-lesson-zone h2{
+    font-size:23px;
+  }
+}
+</style>
+
+
+<section class="ea-lesson-zone" id="englishWithAlexLessons">
+
+  <h2>🎓 English With Alex — Complete Lessons</h2>
+
+  <p>
+    Learn English step by step from school level to university level.
+    Every lesson contains explanations, structures, examples and practice.
+  </p>
+
+  <input
+    id="eaLessonSearch"
+    class="ea-search-box"
+    type="search"
+    placeholder="🔎 Search a lesson, tense, grammar point, example..."
+    oninput="EA.searchLessons()"
+  >
+
+  <div class="ea-filter">
+    <button onclick="EA.filterLevel('all')">All</button>
+    <button onclick="EA.filterLevel('school')">6th–12th</button>
+    <button onclick="EA.filterLevel('university')">University</button>
+    <button onclick="EA.filterLevel('advanced')">Advanced</button>
+    <button onclick="EA.filterTenses()">🕐 Verb Tenses</button>
+  </div>
+
+  <div id="eaResultCount" class="ea-result-count"></div>
+
+  <div id="eaLessonResults" class="ea-tense-grid"></div>
+
+  <div class="ea-voice-panel">
+
+    <strong>🔊 Lesson Voice</strong>
+
+    <p>
+      Select a lesson above, then use the controls below to listen.
+    </p>
+
+    <button class="ea-voice-btn" onclick="EA.speakSelected()">
+      ▶️ Listen
+    </button>
+
+    <button class="ea-voice-btn" onclick="EA.pauseVoice()">
+      ⏸️ Pause
+    </button>
+
+    <button class="ea-voice-btn" onclick="EA.resumeVoice()">
+      ▶️ Resume
+    </button>
+
+    <button class="ea-voice-btn" onclick="EA.stopVoice()">
+      ⏹️ Stop
+    </button>
+
+    <select id="eaVoiceSpeed">
+      <option value="0.65">🐢 Slow</option>
+      <option value="0.85">Normal</option>
+      <option value="1">1x</option>
+      <option value="1.15">Fast</option>
+    </select>
+
+  </div>
+
+</section>
+
+
+<script>
+(function(){
+
+"use strict";
+
+/* =========================================================
+   COMPLETE VERB TENSE DATABASE
+   ========================================================= */
+
+const lessons = [
+
+{
+ id:"present-simple",
+ title:"Present Simple",
+ level:"school",
+ category:"tense",
+ description:"Used for habits, routines, facts and things that are generally true.",
+ structure:"Subject + base verb. With he/she/it, add -s or -es.",
+ uses:[
+   "Daily routines",
+   "Habits",
+   "General truths",
+   "Permanent situations"
+ ],
+ examples:[
+   "I study English every day.",
+   "She works at a hospital.",
+   "Water boils at 100°C.",
+   "They live in Côte d'Ivoire."
+ ],
+ tip:"Remember: he, she and it normally take -s or -es."
+},
+
+{
+ id:"present-continuous",
+ title:"Present Continuous",
+ level:"school",
+ category:"tense",
+ description:"Used for actions happening now or around the present period.",
+ structure:"Subject + am/is/are + verb-ing.",
+ uses:[
+   "Actions happening now",
+   "Temporary situations",
+   "Current activities",
+   "Changing situations"
+ ],
+ examples:[
+   "I am studying English now.",
+   "She is reading a book.",
+   "They are working today.",
+   "The world is changing."
+ ],
+ tip:"Look for am, is or are followed by an -ing verb."
+},
+
+{
+ id:"present-perfect",
+ title:"Present Perfect",
+ level:"school",
+ category:"tense",
+ description:"Connects a past action or experience with the present.",
+ structure:"Subject + have/has + past participle.",
+ uses:[
+   "Life experiences",
+   "Recent actions",
+   "Actions with present results",
+   "Unfinished periods"
+ ],
+ examples:[
+   "I have finished my homework.",
+   "She has visited Ghana.",
+   "They have studied English for three years.",
+   "He has just arrived."
+ ],
+ tip:"Use have/has + past participle."
+},
+
+{
+ id:"present-perfect-continuous",
+ title:"Present Perfect Continuous",
+ level:"advanced",
+ category:"tense",
+ description:"Emphasizes an activity that started in the past and continues or has recently stopped.",
+ structure:"Subject + have/has been + verb-ing.",
+ uses:[
+   "Duration",
+   "Activities continuing until now",
+   "Recently completed activities with visible effects"
+ ],
+ examples:[
+   "I have been studying for two hours.",
+   "She has been working all morning.",
+   "They have been learning English since January."
+ ],
+ tip:"Often used with for and since."
+},
+
+{
+ id:"past-simple",
+ title:"Past Simple",
+ level:"school",
+ category:"tense",
+ description:"Used for completed actions in the past.",
+ structure:"Subject + past form of the verb.",
+ uses:[
+   "Completed past actions",
+   "Past events",
+   "Past habits",
+   "Sequences of past actions"
+ ],
+ examples:[
+   "I studied English yesterday.",
+   "She visited Bouaké last week.",
+   "They played football on Sunday.",
+   "He went to school yesterday."
+ ],
+ tip:"Regular verbs usually take -ed, but irregular verbs have special forms."
+},
+
+{
+ id:"past-continuous",
+ title:"Past Continuous",
+ level:"school",
+ category:"tense",
+ description:"Used for an action that was in progress at a particular moment in the past.",
+ structure:"Subject + was/were + verb-ing.",
+ uses:[
+   "Action in progress in the past",
+   "Background actions",
+   "Interrupted actions",
+   "Two simultaneous actions"
+ ],
+ examples:[
+   "I was studying at 8 p.m.",
+   "She was cooking when I arrived.",
+   "They were watching television.",
+   "We were talking while he was working."
+ ],
+ tip:"Was is used with I/he/she/it. Were is used with you/we/they."
+},
+
+{
+ id:"past-perfect",
+ title:"Past Perfect",
+ level:"advanced",
+ category:"tense",
+ description:"Shows that one past action happened before another past action.",
+ structure:"Subject + had + past participle.",
+ uses:[
+   "Earlier past actions",
+   "Narrative sequence",
+   "Explaining causes in the past"
+ ],
+ examples:[
+   "I had finished my work before he arrived.",
+   "She had already left when I called.",
+   "They had studied before the examination."
+ ],
+ tip:"Think: past before another past."
+},
+
+{
+ id:"past-perfect-continuous",
+ title:"Past Perfect Continuous",
+ level:"advanced",
+ category:"tense",
+ description:"Shows the duration of an activity that continued before another point in the past.",
+ structure:"Subject + had been + verb-ing.",
+ uses:[
+   "Duration before a past event",
+   "Continuous activity before another past action"
+ ],
+ examples:[
+   "I had been studying for two hours before he arrived.",
+   "She had been working all day.",
+   "They had been waiting for an hour."
+ ],
+ tip:"Focus on the duration of the activity."
+},
+
+{
+ id:"future-will",
+ title:"Future Simple — Will",
+ level:"school",
+ category:"tense",
+ description:"Used for predictions, spontaneous decisions, promises and future facts.",
+ structure:"Subject + will + base verb.",
+ uses:[
+   "Predictions",
+   "Promises",
+   "Offers",
+   "Spontaneous decisions"
+ ],
+ examples:[
+   "I will help you.",
+   "She will probably come tomorrow.",
+   "We will study tonight.",
+   "I will call you later."
+ ],
+ tip:"Will is followed by the base form of the verb."
+},
+
+{
+ id:"future-going-to",
+ title:"Be Going To",
+ level:"school",
+ category:"tense",
+ description:"Used for plans, intentions and predictions based on present evidence.",
+ structure:"Subject + am/is/are + going to + base verb.",
+ uses:[
+   "Plans",
+   "Intentions",
+   "Predictions based on evidence"
+ ],
+ examples:[
+   "I am going to study tonight.",
+   "She is going to travel next week.",
+   "Look at those clouds. It is going to rain."
+ ],
+ tip:"Use going to when there is already a plan or present evidence."
+},
+
+{
+ id:"future-continuous",
+ title:"Future Continuous",
+ level:"advanced",
+ category:"tense",
+ description:"Describes an action that will be in progress at a particular future time.",
+ structure:"Subject + will be + verb-ing.",
+ uses:[
+   "Future action in progress",
+   "Polite questions about plans",
+   "Expected future activities"
+ ],
+ examples:[
+   "I will be studying at 8 p.m.",
+   "She will be working tomorrow morning.",
+   "They will be travelling next month."
+ ],
+ tip:"Think: an action in progress at a future moment."
+},
+
+{
+ id:"future-perfect",
+ title:"Future Perfect",
+ level:"advanced",
+ category:"tense",
+ description:"Describes an action that will be completed before a future time.",
+ structure:"Subject + will have + past participle.",
+ uses:[
+   "Completed future actions",
+   "Deadlines",
+   "Future achievements"
+ ],
+ examples:[
+   "I will have finished the course by Friday.",
+   "She will have arrived by noon.",
+   "They will have completed the project by June."
+ ],
+ tip:"Common expressions include by, before and by the time."
+},
+
+{
+ id:"future-perfect-continuous",
+ title:"Future Perfect Continuous",
+ level:"advanced",
+ category:"tense",
+ description:"Emphasizes how long an activity will have continued up to a future point.",
+ structure:"Subject + will have been + verb-ing.",
+ uses:[
+   "Duration until a future moment",
+   "Long-term activities"
+ ],
+ examples:[
+   "By June, I will have been studying English for two years.",
+   "Next month, she will have been working here for five years.",
+   "By 8 p.m., they will have been travelling for ten hours."
+ ],
+ tip:"Focus on duration up to a future point."
+},
+
+{
+ id:"present-passive",
+ title:"Passive Voice",
+ level:"university",
+ category:"grammar",
+ description:"The passive voice focuses on the action or receiver rather than the person performing it.",
+ structure:"Be + past participle.",
+ uses:[
+   "Formal writing",
+   "Academic English",
+   "News reports",
+   "When the agent is unknown or unimportant"
+ ],
+ examples:[
+   "English is spoken around the world.",
+   "The book was written by George Orwell.",
+   "The project will be completed tomorrow."
+ ],
+ tip:"The tense changes the form of BE, while the main verb becomes a past participle."
+},
+
+{
+ id:"conditionals",
+ title:"English Conditionals",
+ level:"advanced",
+ category:"grammar",
+ description:"Conditionals express possible, hypothetical or unreal situations and their consequences.",
+ structure:"If + condition, result.",
+ uses:[
+   "Real possibilities",
+   "General truths",
+   "Hypothetical situations",
+   "Past regrets"
+ ],
+ examples:[
+   "If I study, I will improve.",
+   "If you heat water, it boils.",
+   "If I had more time, I would study more.",
+   "If I had studied harder, I would have passed."
+ ],
+ tip:"The type of conditional changes according to how real or unreal the situation is."
+},
+
+{
+ id:"reported-speech",
+ title:"Reported Speech",
+ level:"university",
+ category:"grammar",
+ description:"Used to report what another person said without repeating their exact words.",
+ structure:"Reporting verb + reported clause.",
+ uses:[
+   "Reporting conversations",
+   "Academic writing",
+   "News",
+   "Formal communication"
+ ],
+ examples:[
+   "He said that he was tired.",
+   "She told me that she had finished.",
+   "They said they would come later."
+ ],
+ tip:"The tense often moves one step back when reporting past speech."
+}
+
+];
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let currentResults = [...lessons];
+let selectedLesson = null;
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+
+function render(list){
+
+ const container = document.getElementById("eaLessonResults");
+ const count = document.getElementById("eaResultCount");
+
+ if(!container) return;
+
+ count.textContent =
+   list.length + " lesson(s) found";
+
+ if(list.length === 0){
+
+   container.innerHTML =
+   '<div class="ea-no-result">' +
+   '❌ No lesson found. Try another word.' +
+   '</div>';
+
+   return;
+ }
+
+ container.innerHTML = list.map((lesson,index)=>{
+
+   const text = [
+     lesson.title,
+     lesson.description,
+     lesson.structure,
+     lesson.uses.join(" "),
+     lesson.examples.join(" "),
+     lesson.tip
+   ].join(" ");
+
+   return `
+   <article class="ea-tense-card">
+
+     <span class="ea-tag">
+       ${lesson.level === "school"
+         ? "6th–12th"
+         : lesson.level === "university"
+         ? "University"
+         : "Advanced"}
+     </span>
+
+     <h3>${lesson.title}</h3>
+
+     <div class="ea-section">
+       <strong>📖 Explanation</strong>
+       <p>${lesson.description}</p>
+     </div>
+
+     <div class="ea-section">
+       <strong>🧩 Structure</strong>
+       <p>${lesson.structure}</p>
+     </div>
+
+     <div class="ea-section">
+       <strong>🎯 Uses</strong>
+       <ul>
+         ${lesson.uses.map(x=>`<li>${x}</li>`).join("")}
+       </ul>
+     </div>
+
+     <div class="ea-section">
+       <strong>💡 Examples</strong>
+
+       ${lesson.examples.map(x=>`
+         <div class="ea-example">${x}</div>
+       `).join("")}
+
+     </div>
+
+     <div class="ea-section">
+       <strong>🧠 Remember</strong>
+       <p>${lesson.tip}</p>
+     </div>
+
+     <button
+       class="ea-voice-btn"
+       onclick="EA.selectAndSpeak(${index})">
+       🔊 Listen to this lesson
+     </button>
+
+   </article>
+   `;
+
+ }).join("");
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+function searchLessons(){
+
+ const input =
+   document.getElementById("eaLessonSearch");
+
+ if(!input) return;
+
+ const query =
+   input.value.trim().toLowerCase();
+
+ if(!query){
+
+   currentResults = [...lessons];
+   render(currentResults);
+   return;
+ }
+
+ currentResults = lessons.filter(lesson=>{
+
+   const searchable = [
+     lesson.title,
+     lesson.description,
+     lesson.structure,
+     lesson.level,
+     lesson.category,
+     ...lesson.uses,
+     ...lesson.examples,
+     lesson.tip
+   ].join(" ").toLowerCase();
+
+   return searchable.includes(query);
+
+ });
+
+ render(currentResults);
+
+}
+
+
+/* =========================================================
+   LEVEL FILTER
+   ========================================================= */
+
+function filterLevel(level){
+
+ if(level === "all"){
+   currentResults = [...lessons];
+ }else{
+   currentResults =
+     lessons.filter(x=>x.level === level);
+ }
+
+ render(currentResults);
+
+}
+
+
+/* =========================================================
+   TENSE FILTER
+   ========================================================= */
+
+function filterTenses(){
+
+ currentResults =
+   lessons.filter(x=>x.category === "tense");
+
+ render(currentResults);
+
+}
+
+
+/* =========================================================
+   SELECT + VOICE
+   ========================================================= */
+
+function buildSpeechText(lesson){
+
+ return `
+ Lesson: ${lesson.title}.
+
+ Explanation:
+ ${lesson.description}
+
+ Structure:
+ ${lesson.structure}
+
+ Main uses:
+ ${lesson.uses.join(". ")}
+
+ Examples:
+ ${lesson.examples.join(". ")}
+
+ Remember:
+ ${lesson.tip}
+ `;
+
+}
+
+
+function selectAndSpeak(index){
+
+ const lesson = currentResults[index];
+
+ if(!lesson) return;
+
+ selectedLesson = lesson;
+
+ speakText(buildSpeechText(lesson));
+
+}
+
+
+function speakSelected(){
+
+ if(!selectedLesson){
+
+   alert("Please select a lesson first.");
+
+   return;
+ }
+
+ speakText(buildSpeechText(selectedLesson));
+
+}
+
+
+function speakText(text){
+
+ if(!("speechSynthesis" in window)){
+
+   alert(
+    "Voice is not available in this browser or on this device."
+   );
+
+   return;
+ }
+
+ window.speechSynthesis.cancel();
+
+ const utterance =
+   new SpeechSynthesisUtterance(text);
+
+ utterance.lang = "en-US";
+
+ const speed =
+   parseFloat(
+     document.getElementById("eaVoiceSpeed").value
+   );
+
+ utterance.rate = speed;
+ utterance.pitch = 1;
+
+ window.speechSynthesis.speak(utterance);
+
+}
+
+
+function pauseVoice(){
+
+ if("speechSynthesis" in window){
+   window.speechSynthesis.pause();
+ }
+
+}
+
+
+function resumeVoice(){
+
+ if("speechSynthesis" in window){
+   window.speechSynthesis.resume();
+ }
+
+}
+
+
+function stopVoice(){
+
+ if("speechSynthesis" in window){
+   window.speechSynthesis.cancel();
+ }
+
+}
+
+
+/* =========================================================
+   PUBLIC API
+   ========================================================= */
+
+window.EA = {
+
+ searchLessons,
+ filterLevel,
+ filterTenses,
+ selectAndSpeak,
+ speakSelected,
+ pauseVoice,
+ resumeVoice,
+ stopVoice
+
+};
+
+
+/* =========================================================
+   INITIAL DISPLAY
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+ render(lessons);
+
+});
+
+})();
+</script>
+ <!-- =========================================================
+ ENGLISH WITH ALEX — MEGA ACADEMY BOOST
+ SCHOOL 6e → MASTER
+ GRAMMAR + VOCABULARY + SPEAKING + LISTENING + WRITING
+ PRONUNCIATION + EXAMS + VOICE + GLOBAL SEARCH
+ ========================================================= -->
+
+<style>
+.ax-mega{
+  max-width:1150px;
+  margin:30px auto;
+  padding:20px;
+  border-radius:22px;
+  background:#ffffff;
+  color:#172033;
+  box-shadow:0 10px 35px rgba(0,0,0,.13);
+}
+
+.ax-mega h2{
+  margin-top:0;
+  font-size:28px;
+}
+
+.ax-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:15px 0;
+}
+
+.ax-nav button{
+  border:0;
+  padding:11px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.ax-content{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:15px;
+}
+
+.ax-card{
+  padding:18px;
+  border:1px solid #ddd;
+  border-radius:16px;
+  background:#fafafa;
+}
+
+.ax-card h3{
+  margin-top:0;
+}
+
+.ax-card ul{
+  padding-left:20px;
+}
+
+.ax-example{
+  background:#f0f3f7;
+  border-left:4px solid #555;
+  padding:9px;
+  margin:7px 0;
+  border-radius:6px;
+}
+
+.ax-listen{
+  border:0;
+  padding:9px 13px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.ax-search{
+  width:100%;
+  box-sizing:border-box;
+  padding:14px;
+  border:2px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+}
+
+.ax-level{
+  display:inline-block;
+  padding:4px 9px;
+  border-radius:15px;
+  background:#edf1ff;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.ax-hidden{
+  display:none;
+}
+
+.ax-exam{
+  padding:15px;
+  margin-top:10px;
+  border-radius:12px;
+  background:#f5f5f5;
+}
+
+.ax-option{
+  display:block;
+  margin:6px 0;
+  padding:9px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.ax-result{
+  margin-top:12px;
+  font-weight:bold;
+}
+
+@media(max-width:600px){
+  .ax-mega{
+    padding:14px;
+  }
+}
+</style>
+
+
+<section class="ax-mega" id="alexMegaAcademy">
+
+<h2>🚀 English With Alex — Mega Academy</h2>
+
+<p>
+A complete English learning system from secondary school
+to university and advanced academic English.
+</p>
+
+<input
+ id="axSearch"
+ class="ax-search"
+ placeholder="🔎 Search grammar, vocabulary, speaking, writing, listening..."
+ oninput="AX.search()"
+>
+
+<div class="ax-nav">
+
+<button onclick="AX.show('all')">📚 All</button>
+<button onclick="AX.show('grammar')">📖 Grammar</button>
+<button onclick="AX.show('vocabulary')">🧠 Vocabulary</button>
+<button onclick="AX.show('speaking')">🗣️ Speaking</button>
+<button onclick="AX.show('listening')">🎧 Listening</button>
+<button onclick="AX.show('writing')">✍️ Writing</button>
+<button onclick="AX.show('pronunciation')">🔤 Pronunciation</button>
+<button onclick="AX.show('exam')">🎯 Exams</button>
+
+</div>
+
+<div id="axResults" class="ax-content"></div>
+
+</section>
+
+
+<script>
+(function(){
+
+"use strict";
+
+
+/* =========================================================
+   MEGA COURSE DATABASE
+   ========================================================= */
+
+const data = [
+
+/* ================= GRAMMAR ================= */
+
+{
+type:"grammar",
+level:"6e",
+title:"Subject Pronouns",
+text:`
+Subject pronouns replace nouns when they are the subject
+of a sentence.
+
+The main subject pronouns are:
+I, you, he, she, it, we and they.
+
+Examples:
+I am a student.
+She is my sister.
+They are friends.
+We study English.
+`
+},
+
+{
+type:"grammar",
+level:"6e",
+title:"Verb To Be",
+text:`
+The verb TO BE is one of the most important verbs in English.
+
+Present:
+I am.
+You are.
+He is.
+She is.
+It is.
+We are.
+They are.
+
+Examples:
+I am a student.
+She is happy.
+They are ready.
+
+Negative:
+I am not.
+He is not.
+They are not.
+
+Questions:
+Are you ready?
+Is she a student?
+`
+},
+
+{
+type:"grammar",
+level:"6e",
+title:"Articles A An The",
+text:`
+A is used before a consonant sound.
+
+Example:
+a book
+a university
+
+AN is used before a vowel sound.
+
+Example:
+an apple
+an English teacher
+
+THE refers to something specific.
+
+Example:
+The book on the table is mine.
+`
+},
+
+{
+type:"grammar",
+level:"6e",
+title:"Plural Nouns",
+text:`
+Most English nouns form the plural with S.
+
+book → books
+car → cars
+student → students
+
+Some nouns are irregular.
+
+man → men
+woman → women
+child → children
+person → people
+`
+},
+
+{
+type:"grammar",
+level:"5e",
+title:"There Is and There Are",
+text:`
+There is is used with singular nouns.
+
+There is a book on the table.
+
+There are is used with plural nouns.
+
+There are three books on the table.
+
+Negative:
+There isn't.
+There aren't.
+
+Questions:
+Is there...?
+Are there...?
+`
+},
+
+{
+type:"grammar",
+level:"4e",
+title:"Countable and Uncountable Nouns",
+text:`
+Countable nouns can be counted.
+
+one book
+two books
+three students
+
+Uncountable nouns are normally not counted individually.
+
+water
+money
+information
+advice
+
+We say:
+some information
+some advice
+some water
+`
+},
+
+{
+type:"grammar",
+level:"3e",
+title:"Comparatives and Superlatives",
+text:`
+Comparatives compare two things.
+
+John is taller than Mark.
+
+Short adjectives normally use -er.
+
+tall → taller
+fast → faster
+
+Superlatives express the highest degree.
+
+John is the tallest student.
+
+Examples:
+big → bigger → the biggest
+beautiful → more beautiful → the most beautiful
+`
+},
+
+{
+type:"grammar",
+level:"3e",
+title:"Modal Verbs",
+text:`
+Modal verbs express ability, possibility, obligation,
+permission or advice.
+
+CAN = ability.
+I can swim.
+
+MUST = strong obligation.
+You must study.
+
+SHOULD = advice.
+You should practice English.
+
+MAY / MIGHT = possibility.
+It might rain.
+
+The modal is followed by the base verb.
+`
+},
+
+{
+type:"grammar",
+level:"2nde",
+title:"First Conditional",
+text:`
+The first conditional describes a real or possible
+future situation.
+
+Structure:
+
+If + present simple, will + base verb.
+
+Example:
+
+If I study, I will pass.
+
+If you practice English, you will improve.
+
+The condition is possible.
+`
+},
+
+{
+type:"grammar",
+level:"1ere",
+title:"Second Conditional",
+text:`
+The second conditional describes hypothetical or unlikely
+situations.
+
+Structure:
+
+If + past simple, would + base verb.
+
+Example:
+
+If I had more money, I would travel.
+
+If I were you, I would study more.
+
+It is commonly used for imagination and advice.
+`
+},
+
+{
+type:"grammar",
+level:"Terminale",
+title:"Third Conditional",
+text:`
+The third conditional talks about an unreal past situation.
+
+Structure:
+
+If + past perfect,
+would have + past participle.
+
+Example:
+
+If I had studied harder,
+I would have passed the examination.
+
+The situation cannot now be changed.
+`
+},
+
+{
+type:"grammar",
+level:"Licence",
+title:"Relative Clauses",
+text:`
+Relative clauses give additional information about a person,
+thing or place.
+
+WHO is generally used for people.
+
+The man who lives here is my teacher.
+
+WHICH is generally used for things.
+
+The book which I bought is interesting.
+
+THAT can often replace who or which in defining clauses.
+
+The student that won the prize is my friend.
+`
+},
+
+{
+type:"grammar",
+level:"Licence",
+title:"Gerunds and Infinitives",
+text:`
+A gerund is the -ing form used as a noun.
+
+I enjoy reading.
+
+An infinitive normally uses TO + base verb.
+
+I want to learn.
+
+Some verbs are followed by gerunds,
+while others are followed by infinitives.
+
+Examples:
+
+enjoy reading
+avoid smoking
+want to learn
+decide to study
+`
+},
+
+{
+type:"grammar",
+level:"Master",
+title:"Advanced Tense Review",
+text:`
+Advanced English requires choosing the tense according
+to meaning, time and context.
+
+Compare:
+
+I studied English.
+A completed past action.
+
+I was studying English.
+An action in progress at a past moment.
+
+I have studied English.
+Past experience connected with the present.
+
+I had studied English.
+An action completed before another past event.
+
+I will have studied English.
+An action completed before a future point.
+
+Understanding the relationship between actions is more
+important than memorizing isolated rules.
+`
+},
+
+{
+type:"grammar",
+level:"Master",
+title:"Academic Grammar",
+text:`
+Academic English requires precision.
+
+Avoid informal structures when formal writing is expected.
+
+Use precise verbs, logical connectors and clear sentence
+structures.
+
+Useful connectors include:
+
+however
+therefore
+moreover
+furthermore
+consequently
+nevertheless
+in contrast
+in addition
+
+Academic writing should be clear, objective and logically
+organized.
+`
+},
+
+
+/* ================= VOCABULARY ================= */
+
+{
+type:"vocabulary",
+level:"6e",
+title:"School Vocabulary",
+text:`
+Basic school vocabulary:
+
+school
+teacher
+student
+classroom
+book
+pen
+notebook
+lesson
+homework
+examination
+
+Example:
+I have an English lesson today.
+`
+},
+
+{
+type:"vocabulary",
+level:"3e",
+title:"Daily Life Vocabulary",
+text:`
+Daily life vocabulary includes:
+
+wake up
+get dressed
+have breakfast
+go to school
+study
+work
+come home
+have dinner
+go to bed
+
+Example:
+I wake up at six o'clock every morning.
+`
+},
+
+{
+type:"vocabulary",
+level:"Terminale",
+title:"Argumentation Vocabulary",
+text:`
+Useful words for arguments and essays:
+
+however
+because
+therefore
+although
+whereas
+moreover
+indeed
+nevertheless
+consequently
+
+Example:
+
+Social media is useful; however,
+it can also create problems.
+`
+},
+
+{
+type:"vocabulary",
+level:"Licence",
+title:"Academic Vocabulary",
+text:`
+Important academic words:
+
+analyze
+demonstrate
+evaluate
+compare
+contrast
+identify
+interpret
+significant
+evidence
+research
+
+Example:
+
+This study analyzes the impact of technology on education.
+`
+},
+
+{
+type:"vocabulary",
+level:"Master",
+title:"Diplomatic and Professional English",
+text:`
+Useful professional vocabulary:
+
+negotiation
+agreement
+cooperation
+partnership
+development
+investment
+policy
+international relations
+economic growth
+bilateral relations
+
+Example:
+
+The two countries signed a cooperation agreement.
+`
+},
+
+
+/* ================= SPEAKING ================= */
+
+{
+type:"speaking",
+level:"6e",
+title:"Introducing Yourself",
+text:`
+Use simple sentences to introduce yourself.
+
+My name is Alex.
+I am a student.
+I live in Côte d'Ivoire.
+I study English.
+I like music.
+
+Practice:
+Say your name, age, country, studies and hobbies
+without reading.
+`
+},
+
+{
+type:"speaking",
+level:"3e",
+title:"Talking About Your Daily Routine",
+text:`
+Use the present simple.
+
+I wake up at six.
+I take breakfast.
+I go to school.
+I study English.
+I return home in the evening.
+
+Challenge:
+Speak for one minute without stopping.
+`
+},
+
+{
+type:"speaking",
+level:"Terminale",
+title:"Giving Your Opinion",
+text:`
+Useful expressions:
+
+In my opinion...
+I believe that...
+From my point of view...
+I agree because...
+I disagree because...
+For example...
+However...
+
+Challenge:
+Give your opinion about social media for two minutes.
+`
+},
+
+{
+type:"speaking",
+level:"Licence",
+title:"Academic Presentation",
+text:`
+A strong presentation has three parts:
+
+1. Introduction
+2. Development
+3. Conclusion
+
+Useful opening:
+
+Good morning everyone.
+Today I would like to talk about...
+
+Useful transition:
+
+Let us now move to the second point.
+
+Conclusion:
+
+To conclude, we can say that...
+`
+},
+
+{
+type:"speaking",
+level:"Master",
+title:"Professional Interview",
+text:`
+A professional interview requires clear answers.
+
+Useful expressions:
+
+Thank you for the opportunity.
+I have experience in...
+My strengths are...
+I am interested in this position because...
+My long-term goal is...
+
+Avoid extremely short answers.
+Explain your ideas with examples.
+`
+},
+
+
+/* ================= LISTENING ================= */
+
+{
+type:"listening",
+level:"6e",
+title:"Basic Listening",
+text:`
+Listen for simple information.
+
+Name.
+Age.
+Country.
+School.
+Family.
+Hobbies.
+
+Practice sentence:
+
+My name is Alex. I am sixteen years old.
+I live in Côte d'Ivoire and I study English.
+`
+},
+
+{
+type:"listening",
+level:"3e",
+title:"Listening for Key Words",
+text:`
+You do not need to understand every word.
+
+Listen first for:
+
+Who?
+What?
+Where?
+When?
+Why?
+
+Example:
+
+John went to the market yesterday
+because he needed some food.
+
+Key information:
+Who? John.
+Where? Market.
+When? Yesterday.
+Why? Food.
+`
+},
+
+{
+type:"listening",
+level:"Terminale",
+title:"Listening for Main Ideas",
+text:`
+When listening to a long conversation,
+focus first on the main idea.
+
+Do not stop mentally at every unknown word.
+
+Ask:
+
+What is the subject?
+Who is speaking?
+What is the speaker's opinion?
+What examples are given?
+`
+},
+
+{
+type:"listening",
+level:"Licence",
+title:"Academic Listening",
+text:`
+Academic lectures often contain:
+
+definitions
+examples
+arguments
+comparisons
+conclusions
+
+Listen for signal words:
+
+firstly
+however
+therefore
+for example
+in conclusion
+`
+},
+
+
+/* ================= WRITING ================= */
+
+{
+type:"writing",
+level:"6e",
+title:"Writing Simple Sentences",
+text:`
+A basic English sentence normally contains:
+
+Subject + Verb + Object.
+
+Example:
+
+I study English.
+
+Subject = I.
+Verb = study.
+Object = English.
+
+Practice:
+Write five sentences about yourself.
+`
+},
+
+{
+type:"writing",
+level:"3e",
+title:"Paragraph Writing",
+text:`
+A paragraph should normally contain:
+
+Topic sentence.
+Supporting ideas.
+Example.
+Closing sentence.
+
+Example topic:
+
+Why I study English.
+
+Begin with the main idea,
+then explain it with details.
+`
+},
+
+{
+type:"writing",
+level:"Terminale",
+title:"English Essay",
+text:`
+A good essay normally contains:
+
+Introduction.
+Development.
+Conclusion.
+
+Introduction:
+Present the topic and your position.
+
+Development:
+Explain your arguments with examples.
+
+Conclusion:
+Summarize your main ideas.
+`
+},
+
+{
+type:"writing",
+level:"Licence",
+title:"Academic Essay",
+text:`
+Academic essays require:
+
+a clear thesis
+logical paragraphs
+evidence
+analysis
+coherent transitions
+a conclusion
+
+Avoid unsupported claims.
+
+Instead of:
+
+Technology is good.
+
+Write:
+
+Technology can improve access to education
+when it is used appropriately.
+`
+},
+
+{
+type:"writing",
+level:"Master",
+title:"Research Writing",
+text:`
+Advanced academic writing should demonstrate:
+
+clarity
+precision
+critical analysis
+evidence
+logical structure
+appropriate references
+
+Do not simply describe information.
+
+Analyze it.
+
+Compare perspectives.
+Identify limitations.
+Explain implications.
+`
+},
+
+
+/* ================= PRONUNCIATION ================= */
+
+{
+type:"pronunciation",
+level:"6e",
+title:"English Alphabet Sounds",
+text:`
+English letters do not always correspond to one sound.
+
+Practice the alphabet aloud.
+
+A, B, C, D, E, F, G...
+
+Do not rely only on French pronunciation.
+
+Listen to native or high-quality English pronunciation
+and imitate it.
+`
+},
+
+{
+type:"pronunciation",
+level:"3e",
+title:"TH Sound",
+text:`
+English has two common TH sounds.
+
+Voiceless:
+think
+three
+thank
+
+Voiced:
+this
+that
+they
+
+Place the tongue lightly between the teeth.
+
+Practice slowly before increasing speed.
+`
+},
+
+{
+type:"pronunciation",
+level:"Terminale",
+title:"Word Stress",
+text:`
+English pronunciation depends strongly on word stress.
+
+For example:
+
+PREsent = noun
+preSENT = verb
+
+CONtract = noun
+conTRACT = verb
+
+Stress can affect understanding.
+`
+},
+
+{
+type:"pronunciation",
+level:"Licence",
+title:"Connected Speech",
+text:`
+Native speakers often connect words.
+
+For example:
+
+What are you doing?
+
+In natural speech,
+words may sound connected.
+
+Shadowing helps learners reproduce
+natural rhythm and intonation.
+`
+},
+
+
+/* ================= EXAMS ================= */
+
+{
+type:"exam",
+level:"6e",
+title:"Beginner Grammar Test",
+text:`
+Question 1:
+
+She ___ a student.
+
+A. am
+B. is
+C. are
+
+Correct answer: B — is.
+
+Question 2:
+
+They ___ football.
+
+A. play
+B. plays
+C. playing
+
+Correct answer: A — play.
+`
+},
+
+{
+type:"exam",
+level:"3e",
+title:"Intermediate Grammar Test",
+text:`
+Question:
+
+I ___ English for three years.
+
+A. study
+B. studied
+C. have studied
+
+Correct answer: C — have studied.
+
+The present perfect connects a past action
+with the present.
+`
+},
+
+{
+type:"exam",
+level:"Terminale",
+title:"Advanced Grammar Test",
+text:`
+Question:
+
+If I ___ more time, I would study another language.
+
+A. have
+B. had
+C. will have
+
+Correct answer: B — had.
+
+This is the second conditional.
+`
+},
+
+{
+type:"exam",
+level:"Licence",
+title:"University English Test",
+text:`
+Question:
+
+The research ___ that social media influences communication.
+
+A. demonstrate
+B. demonstrates
+C. demonstrating
+
+Correct answer: B — demonstrates.
+
+Research is singular in this sentence.
+`
+},
+
+{
+type:"exam",
+level:"Master",
+title:"Advanced Academic Test",
+text:`
+Question:
+
+Which expression is most appropriate for formal academic writing?
+
+A. A lot of people think...
+B. People kinda think...
+C. Previous studies suggest that...
+
+Correct answer: C.
+
+Academic English favors precise and evidence-based language.
+`
+}
+
+];
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+
+let current = data.slice();
+let currentCategory = "all";
+
+function render(list){
+
+ const box = document.getElementById("axResults");
+
+ if(!box) return;
+
+ if(!list.length){
+
+   box.innerHTML =
+   "<div class='ax-card'>" +
+   "❌ No result found." +
+   "</div>";
+
+   return;
+ }
+
+ box.innerHTML = list.map((item,index)=>`
+
+ <article class="ax-card">
+
+   <span class="ax-level">
+     ${item.level.toUpperCase()}
+   </span>
+
+   <h3>${item.title}</h3>
+
+   <div>
+     ${formatText(item.text)}
+   </div>
+
+   <br>
+
+   <button
+    class="ax-listen"
+    onclick="AX.listen(${index})">
+
+    🔊 Listen
+
+   </button>
+
+ </article>
+
+ `).join("");
+
+}
+
+
+function formatText(text){
+
+ return text
+ .trim()
+ .split("\n")
+ .map(line=>{
+
+   const clean=line.trim();
+
+   if(!clean) return "";
+
+   if(
+     clean.endsWith(":") ||
+     clean.match(/^\d+\./)
+   ){
+     return "<strong>"+clean+"</strong>";
+   }
+
+   return "<p>"+clean+"</p>";
+
+ }).join("");
+
+}
+
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+
+function show(type){
+
+ currentCategory = type;
+
+ if(type==="all"){
+
+   current=data.slice();
+
+ }else{
+
+   current=data.filter(x=>x.type===type);
+
+ }
+
+ render(current);
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+function search(){
+
+ const input =
+ document.getElementById("axSearch");
+
+ const query =
+ input.value.trim().toLowerCase();
+
+ let base =
+ currentCategory==="all"
+ ? data
+ : data.filter(x=>x.type===currentCategory);
+
+ if(!query){
+
+   current=base.slice();
+
+ }else{
+
+   current=base.filter(item=>{
+
+     const content=(
+       item.title+" "+
+       item.type+" "+
+       item.level+" "+
+       item.text
+     ).toLowerCase();
+
+     return content.includes(query);
+
+   });
+
+ }
+
+ render(current);
+
+}
+
+
+/* =========================================================
+   VOICE
+   ========================================================= */
+
+function listen(index){
+
+ const item=current[index];
+
+ if(!item) return;
+
+ if(!("speechSynthesis" in window)){
+
+   alert(
+    "Your browser does not support English voice."
+   );
+
+   return;
+ }
+
+ speechSynthesis.cancel();
+
+ const text=
+ item.title+". "+
+ item.text;
+
+ const voice=
+ new SpeechSynthesisUtterance(text);
+
+ voice.lang="en-US";
+ voice.rate=.85;
+ voice.pitch=1;
+
+ speechSynthesis.speak(voice);
+
+}
+
+
+/* =========================================================
+   PUBLIC API
+   ========================================================= */
+
+window.AX={
+ show,
+ search,
+ listen
+};
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+document.addEventListener(
+ "DOMContentLoaded",
+ function(){
+
+   render(data);
+
+ }
+);
+
+})();
+</script>
+
+<!-- =========================================================
+ END MEGA ACADEMY BOOST
+ ========================================================= -->
+</body>
 </html>
