@@ -176,6 +176,25 @@ body.v4-lock{overflow-x:hidden}
 <div class="level intermediate v4-level" onclick="v4Level('Intermediate')"><div style="font-size:42px">🔵</div><h3>Intermediate</h3><p>Fluidité • lycée • communication académique</p></div>
 <div class="level advanced v4-level" onclick="v4Level('Advanced')"><div style="font-size:42px">🟣</div><h3>Advanced</h3><p>Université • anglais professionnel • maîtrise</p></div>
 </div>
+<!-- GLOBAL SEARCH -->
+<div class="v4-search-box" style="margin:30px 0;">
+  <div class="section-title">
+    <h2>🔎 Search English With Alex</h2>
+    <p>Find a lesson, vocabulary topic, country, work or learning resource.</p>
+  </div>
+
+  <div style="display:flex;gap:10px;max-width:800px;margin:auto;">
+    <input
+      id="globalSearch"
+      type="text"
+      placeholder="🔎 Search here... e.g. grammar, Africa, vocabulary"
+      oninput="globalSearchAlex(this.value)"
+      style="flex:1;padding:14px;border-radius:10px;border:1px solid #ccc;font-size:16px;"
+    >
+  </div>
+
+  <div id="globalSearchResults" style="max-width:800px;margin:15px auto;"></div>
+</div>
 <div class="v4-resource">
 <div class="v4-card"><div class="card-icon">🌍</div><h3>African Countries</h3><p>19 pays anglophones africains, étudiés en détail.</p><button onclick="v4Countries('Africa')">Open</button></div>
 <div class="v4-card"><div class="card-icon">🌎</div><h3>Western Countries</h3><p>6 grands pays anglophones occidentaux.</p><button onclick="v4Countries('West')">Open</button></div>
@@ -1424,5 +1443,352 @@ function axProWorks(){
  items.forEach((it,i)=>h+=`<div class="axpro-work ax-work-item" data-text="${axEsc(it.text.toLowerCase())}">${it.html}</div>`);h+='</div><br><button class="axpro-btn alt" onclick="axProOpenHome()">← Retour</button>';axProOpen('📚 Bibliothèque — 200 œuvres',h);
 }
 function axProWorkFilter(){const q=(document.getElementById('axWorkSearch')?.value||'').toLowerCase();document.querySelectorAll('.ax-work-item').forEach(e=>e.style.display=e.innerText.toLowerCase().includes(q)?'block':'none');}
+window.globalSearchAlex = function(query) {
+  const results = document.getElementById('globalSearchResults');
+  if (!results) return;
+
+  query = query.trim().toLowerCase();
+
+  if (!query) {
+    results.innerHTML = '';
+    return;
+  }
+
+  const items = document.querySelectorAll(
+    '.v4-card, .level, .country-profile, .resource-card, .work-card'
+  );
+
+  let found = [];
+
+  items.forEach(item => {
+    const text = item.innerText.toLowerCase();
+
+    if (text.includes(query)) {
+      const title =
+        item.querySelector('h3, h2, h4')?.innerText ||
+        'Learning resource';
+
+      found.push({
+        title: title,
+        text: item.innerText
+      });
+    }
+  });
+
+  if (found.length === 0) {
+    results.innerHTML = `
+      <div class="v4-note">
+        😕 No result found.<br>
+        Try another word such as <b>grammar</b>, <b>vocabulary</b>,
+        <b>listening</b>, <b>Africa</b> or <b>music</b>.
+      </div>
+    `;
+    return;
+  }
+
+  results.innerHTML = `
+    <div class="v4-note">
+      🔎 <b>${found.length}</b> result(s) found
+    </div>
+    ${found.map(item => `
+      <div class="v4-lesson" style="margin-top:10px;">
+        <h3>📚 ${item.title}</h3>
+        <p>${item.text.substring(0,250)}...</p>
+      </div>
+    `).join('')}
+  `;
+};
+/* =========================================================
+   ENGLISH WITH ALEX — SEARCH + XP + PROGRESS + BADGES
+   Academy Pro untouched
+   ========================================================= */
+
+/* ---------- GLOBAL SEARCH ---------- */
+window.globalSearchAlex = function(query) {
+  const results = document.getElementById('globalSearchResults');
+  if (!results) return;
+
+  query = query.trim().toLowerCase();
+
+  if (!query) {
+    results.innerHTML = '';
+    return;
+  }
+
+  const items = document.querySelectorAll(
+    '.v4-card, .level, .country-profile, .resource-card, .work-card'
+  );
+
+  let found = [];
+
+  items.forEach(item => {
+    const text = item.innerText || '';
+    if (text.toLowerCase().includes(query)) {
+      const title =
+        item.querySelector('h3, h2, h4')?.innerText ||
+        'Learning Resource';
+
+      found.push({
+        title: title,
+        text: text
+      });
+    }
+  });
+
+  if (found.length === 0) {
+    results.innerHTML = `
+      <div class="v4-note">
+        😕 <b>No result found.</b><br>
+        Try: grammar, vocabulary, listening, Africa, music or shadowing.
+      </div>
+    `;
+    return;
+  }
+
+  results.innerHTML = `
+    <div class="v4-note">
+      🔎 <b>${found.length}</b> result(s) found
+    </div>
+
+    ${found.map(item => `
+      <div class="v4-lesson" style="margin-top:10px;">
+        <h3>📚 ${item.title}</h3>
+        <p>${item.text.substring(0,250)}...</p>
+      </div>
+    `).join('')}
+  `;
+};
+
+
+/* ---------- LEARNING DATA ---------- */
+
+const ALEX_PROGRESS_KEY = 'englishWithAlexProgress';
+
+function alexGetData() {
+  let data;
+
+  try {
+    data = JSON.parse(localStorage.getItem(ALEX_PROGRESS_KEY));
+  } catch(e) {
+    data = null;
+  }
+
+  if (!data) {
+    data = {
+      xp: 0,
+      activities: 0,
+      badges: [],
+      streak: 0,
+      lastDate: null
+    };
+  }
+
+  return data;
+}
+
+
+function alexSaveData(data) {
+  localStorage.setItem(
+    ALEX_PROGRESS_KEY,
+    JSON.stringify(data)
+  );
+}
+
+
+/* ---------- STREAK ---------- */
+
+function alexUpdateStreak(data) {
+
+  const today = new Date().toISOString().split('T')[0];
+
+  if (!data.lastDate) {
+    data.streak = 1;
+    data.lastDate = today;
+    return;
+  }
+
+  if (data.lastDate === today) {
+    return;
+  }
+
+  const last = new Date(data.lastDate);
+  const now = new Date(today);
+
+  const difference =
+    Math.floor((now - last) / 86400000);
+
+  if (difference === 1) {
+    data.streak += 1;
+  } else {
+    data.streak = 1;
+  }
+
+  data.lastDate = today;
+}
+
+
+/* ---------- BADGES ---------- */
+
+function alexUpdateBadges(data) {
+
+  const badges = [];
+
+  if (data.activities >= 1)
+    badges.push('First Step');
+
+  if (data.xp >= 100)
+    badges.push('100 XP');
+
+  if (data.xp >= 500)
+    badges.push('English Explorer');
+
+  if (data.xp >= 1000)
+    badges.push('English Champion');
+
+  if (data.streak >= 3)
+    badges.push('3 Day Streak');
+
+  if (data.streak >= 7)
+    badges.push('7 Day Streak');
+
+  if (data.streak >= 30)
+    badges.push('30 Day Streak');
+
+  data.badges = badges;
+}
+
+
+/* ---------- LEVEL ---------- */
+
+function alexGetLevel(xp) {
+
+  if (xp >= 2000) return 'Advanced';
+  if (xp >= 1000) return 'Upper Intermediate';
+  if (xp >= 500) return 'Intermediate';
+  if (xp >= 200) return 'Elementary';
+
+  return 'Beginner';
+}
+
+
+/* ---------- PROGRESS ---------- */
+
+function alexGetProgress(xp) {
+
+  const progress =
+    Math.min(100, Math.round((xp / 2000) * 100));
+
+  return progress;
+}
+
+
+/* ---------- UPDATE DISPLAY ---------- */
+
+function alexUpdateDisplay() {
+
+  const data = alexGetData();
+
+  alexUpdateBadges(data);
+
+  const xp = data.xp;
+  const level = alexGetLevel(xp);
+  const progress = alexGetProgress(xp);
+
+  const xpElement =
+    document.getElementById('alexXP');
+
+  const levelElement =
+    document.getElementById('alexLevel');
+
+  const streakElement =
+    document.getElementById('alexStreak');
+
+  const badgesElement =
+    document.getElementById('alexBadges');
+
+  const progressText =
+    document.getElementById('alexProgressText');
+
+  const progressBar =
+    document.getElementById('alexProgressBar');
+
+  if (xpElement)
+    xpElement.textContent = xp;
+
+  if (levelElement)
+    levelElement.textContent = level;
+
+  if (streakElement)
+    streakElement.textContent = data.streak;
+
+  if (badgesElement)
+    badgesElement.textContent = data.badges.length;
+
+  if (progressText)
+    progressText.textContent = progress + '%';
+
+  if (progressBar)
+    progressBar.style.width = progress + '%';
+
+  alexSaveData(data);
+}
+
+
+/* ---------- COMPLETE ACTIVITY ---------- */
+
+window.alexCompleteActivity = function() {
+
+  const data = alexGetData();
+
+  data.xp += 25;
+  data.activities += 1;
+
+  alexUpdateStreak(data);
+  alexUpdateBadges(data);
+  alexSaveData(data);
+
+  alexUpdateDisplay();
+
+  const message =
+    document.getElementById('alexBadgeMessage');
+
+  if (message) {
+
+    let badgeText = '';
+
+    if (data.badges.length > 0) {
+      badgeText =
+        `<br>🏅 Badges: ${data.badges.join(' • ')}`;
+    }
+
+    message.innerHTML = `
+      🎉 <b>Great job!</b><br>
+      You earned <b>+25 XP</b>.<br>
+      Keep learning and keep speaking English!
+      ${badgeText}
+    `;
+
+    message.style.display = 'block';
+
+    setTimeout(() => {
+      message.style.display = 'none';
+    }, 5000);
+  }
+};
+
+
+/* ---------- INITIALIZE ---------- */
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  const data = alexGetData();
+
+  alexUpdateStreak(data);
+  alexUpdateBadges(data);
+  alexSaveData(data);
+
+  alexUpdateDisplay();
+
+}); 
 </script></body>
 </html>
