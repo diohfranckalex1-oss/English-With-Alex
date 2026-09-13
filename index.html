@@ -144,6 +144,14 @@ body.v4-lock{overflow-x:hidden}
 @media(max-width:900px){.v4-hub,.v4-grid{grid-template-columns:1fr 1fr}.v4-resource{grid-template-columns:1fr 1fr}.v4-country .facts{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.v4-hub,.v4-grid,.v4-grid.two,.v4-resource,.v4-country .facts{grid-template-columns:1fr}.v4-modal-body{padding:15px}.v4-modal-head h2{font-size:18px}}
 </style>
+
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0b5cff">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="English With Alex">
+<link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
 </head>
 <body>
 <header><div class="navbar"><div class="brand"><div class="usa-flag"></div>English <span>with Alex</span></div>
@@ -2003,5 +2011,11 @@ window.axProOpenHome=home;window.axProLevels=levels;window.axProLessons=lessons;
 })();
 </script>
 
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('./service-worker.js').catch(function(err){ console.log('Service worker:', err); }); });
+}
+</script>
 </body>
 </html>

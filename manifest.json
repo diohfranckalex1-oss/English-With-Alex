@@ -1,0 +1,14 @@
+{
+  "name": "English With Alex",
+  "short_name": "English With Alex",
+  "description": "Educational platform from secondary school to Master 2.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f4f7fb",
+  "theme_color": "#0b5cff",
+  "icons": [
+    {"src":"./icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
